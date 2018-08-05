@@ -19,9 +19,9 @@ class DataHandler:
         
         return raw_data
 
-    def __init__(self, filename):
+    def __init__(self, filename, year_class):
         self.rawdata=DataHandler.get_data_from_excel(filename)
-        self.year_class=filename.split('_')[1].split('.')[0]
+        self.year_class=year_class
         self.cache={}
 
     def get_scores(self):
