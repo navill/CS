@@ -51,6 +51,7 @@
      - inheritance
    - HAS-A
      - composition
+     - aggression
    - abstract class
  ---
  
