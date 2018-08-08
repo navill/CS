@@ -98,3 +98,8 @@ class Duck(Animal):
       - pure virtual method
        : 몸체(body)가 없는 함수
       - 파생 클래스에서 반드시 overriding 해야 함
+---
+## class design
+  - 같은 멤버와 같은 메서드 --> 부모 클래스에 둔다
+    - 코드 재사용 
+  - 부모가 추상 클래스인 경우를 제외, 베이스 클래스의 많은 부분을 오버라이딩하는 파생 클래스는 피한다.   
