@@ -67,10 +67,20 @@
 ---
 
 ## CPU
-  - clock
+  - ALU
+  - CU
   - register
     - instruction register
-    - program counter 
+    - program counter
+    - general purpose registers 
+---
+## CPU
+  - instruction
+    - from C code to machine code
+---
+
+## CPU
+  - clock
 ---
 
 ## cache and locality
