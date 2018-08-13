@@ -11,6 +11,7 @@
 ## recursion
   - fibonacci
   - hanoi tower
+  - factorial
 ---
 
 # data structure

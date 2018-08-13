@@ -54,7 +54,7 @@ print(c)
 ```python
 #ast
 >>> import ast
-#node ěěą
+#node 생성
 >>> node = ast.parse(s, 'test.py', 'exec')
 # yield all descendant nodes
 >>> g = ast.walk(node)

@@ -22,7 +22,7 @@ class Node:
     def next(self, n):
         self.__next=n
 
-class LinkedList:
+class SingleLinkedList:
     def __init__(self):
         self.head=None
         self.d_size=0
@@ -45,50 +45,20 @@ class LinkedList:
             self.head=new_node
         self.d_size+=1
 
-    def __insert_after(self, data, bef_node):
-        new_node=Node(data)
-        new_node.next=bef_node.next
-        bef_node.next=new_node
-        self.d_size+=1
-
-    def insert_after(self, data, bef_data):
-        bef_node=self.search(bef_data)
-        self.__insert_after(data, bef_node)
-
-    def __search(self, target):
-        """
-        search(target)->(before node, current node)
-        """
+    def search(self, target):
         if self.empty():
-            return None, None
+            return None
 
-        bef=self.head
         cur=self.head
         while cur:
             if cur.data==target:
-                return bef, cur
-            bef=cur
+                return cur
             cur=cur.next
-        return None, None
-
-    def search(self, target):
-        return self.__search(target)[1]
+        return None
 
     def delete(self):
         self.head=self.head.next
         self.d_size-=1
-
-    def __delete_node(self, bef_node):
-        del_node=bef_node.next
-        bef_node.next=bef_node.next.next
-        self.d_size-=1
-        return del_node
-
-    def delete_node(self, target):
-        bef, cur = self.__search(target)
-        if not cur:
-            return None
-        return self.__delete_node(bef)
 
     def traverse(self):
         cur=self.head
@@ -97,15 +67,17 @@ class LinkedList:
             cur=cur.next
 
 def show_list(slist):
+    print('data size : {}'.format(slist.size()))
     g=slist.traverse()
     for node in g:
         print(node.data, end= '  ')
+    print()
 
 if __name__=="__main__":
     print('*'*100)
-    slist=LinkedList()
+    slist=SingleLinkedList()
 
-    print('데이터 삽입-add')
+    print('데이터 삽입')
     slist.add(3)
     slist.add(1)
     slist.add(5)
@@ -113,15 +85,7 @@ if __name__=="__main__":
     slist.add(7)
     slist.add(8)
     slist.add(3)
-    print('데이터 개수 : {}'.format(slist.size()))
     show_list(slist)
-    print('\n')
-
-    print('데이터 삽입-insert_after')
-    slist.insert_after(10, 5)
-    print('데이터 개수 : {}'.format(slist.size()))
-    show_list(slist)
-    print('\n')
 
     print('데이터 탐색')
     target=5
@@ -133,19 +97,10 @@ if __name__=="__main__":
     res=None
     print()
 
-    print('데이터 삭제-delete')
+    print('데이터 삭제')
     slist.delete()
     slist.delete()
     slist.delete()
-    print('데이터 개수 : {}'.format(slist.size()))
     show_list(slist)
-    print()
-
-    print('데이터 삭제-delete_node')
-    slist.delete_node(5)
-    slist.delete_node(1)
-    print('데이터 개수 : {}'.format(slist.size()))
-    show_list(slist)
-    print()
     
     print('*'*100)
