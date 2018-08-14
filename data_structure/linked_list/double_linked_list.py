@@ -168,13 +168,13 @@ if __name__=="__main__":
     dlist.add_last(5)
     show_list(dlist, start=True)
 
-    # print('데이터 삽입 - insert_after')
-    # dlist.insert_after(4, dlist.search_forward(3))
-    # show_list(dlist, start=True)
-
-    print('데이터 삽입 - insert_before')
-    dlist.insert_before(4, dlist.search_forward(5))
+    print('데이터 삽입 - insert_after')
+    dlist.insert_after(4, dlist.search_forward(3))
     show_list(dlist, start=True)
+
+    # print('데이터 삽입 - insert_before')
+    # dlist.insert_before(4, dlist.search_forward(5))
+    # show_list(dlist, start=True)
 
     print('데이터 탐색')
     target=3

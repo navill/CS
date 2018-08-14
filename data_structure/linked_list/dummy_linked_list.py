@@ -24,7 +24,7 @@ class Node:
 
 class SingleLinkedList:
     def __init__(self):
-        self.head=None
+        self.head=Node()
         self.d_size=0
 
     def empty(self):
@@ -38,15 +38,12 @@ class SingleLinkedList:
 
     def add(self, data):
         new_node=Node(data)
-        if self.empty():
-            self.head=new_node
-        else:
-            new_node.next=self.head
-            self.head=new_node
+        new_node.next=self.head.next
+        self.head.next=new_node
         self.d_size+=1
 
     def search(self, target):
-        cur=self.head
+        cur=self.head.next
         while cur:
             if cur.data==target:
                 return cur
@@ -54,11 +51,11 @@ class SingleLinkedList:
         return None
 
     def delete(self):
-        self.head=self.head.next
+        self.head.next=self.head.next.next
         self.d_size-=1
 
     def traverse(self):
-        cur=self.head
+        cur=self.head.next
         while cur:
             yield cur
             cur=cur.next
