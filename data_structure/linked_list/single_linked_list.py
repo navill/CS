@@ -54,6 +54,9 @@ class SingleLinkedList:
         return None
 
     def delete(self):
+        if self.empty():
+            return
+            
         self.head=self.head.next
         self.d_size-=1
 
