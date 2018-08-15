@@ -125,12 +125,10 @@ class DoubleLinkedList:
         self.d_size-=1
 
     def delete_node(self, node):
-        del_node=node
         node.before.next=node.next
         node.next.before=node.before
 
         self.d_size-=1
-        return del_node
 
     def traverse(self, start=True):
         """
