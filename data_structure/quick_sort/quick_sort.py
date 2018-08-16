@@ -1,3 +1,5 @@
+import random
+import time
 def quick_sort(li, start, end):
     if start >= end:
         return
@@ -19,7 +21,14 @@ def quick_sort(li, start, end):
     quick_sort(li, left, end)
 
 if __name__=="__main__":
-    data=[2, 4, 5, 7, 9, 5, 11, 3, 8, 1]
-    quick_sort(data, 0, len(data)-1)
-    print(data)
+    while True:
+        num_data=int(input('데이터 개수(종료:0):'))
+        if not num_data:
+            break
+        data=[random.randint(1, 1000) for _ in range(num_data)]
+        start=time.time()
+        quick_sort(data, 0, len(data)-1)
+        elapsed=time.time()-start
+        print('elapsed time : {} sec.'.format(elapsed))
+        #print(data)
 
