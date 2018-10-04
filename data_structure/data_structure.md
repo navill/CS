@@ -1,41 +1,128 @@
 
-# data structure & algorithm
-## intro
+# data structure
+## search algorithm
 - linear search
 - binary search
+---
+
+## complexity
+  - time complexity
+  - space complexity
+---
+
+## time complexity
+  - linear search
+  - binary search
+---
+
+## big O
 - big O of linear search
 - big O of binary search
 ---
 
-# data structure
+## ADT 
+  - abstract data type
+---
+
 ## recursion
-  - fibonacci
-  - hanoi tower
+  - base case
   - factorial
+  - fibonacci - how to convert to iterative
+  - hanoi tower
 ---
 
-# data structure
 ## linked list
+  - node
   - single linked list
+  - double linked list
+  - dynamic array vs. linked list
 ---
 
-# data structure
 ## stack, queue
-  - stack, queue
-  - stack을 이용한 계산기 만들기
+  - stack 
+    - node base
+    - python list base
+  - queue
+    - node base
+    - python list base
+---
+## stack exercise
+  - postfix expression
 ---
 
-# data structure
-## tree
-  - binary tree
-  - binary search tree
+## binary tree
+  - node
+    - root, leaf, internal
+  - depth, level, height
+  - full binary tree and complete binary tree
 ---
-# algorithm
+
+## bin tree traversal
+  - preorder
+  - inorder
+  - postorder
+  - levelorder
+---
+
+## dictionary
+  - BST
+  - hashing
+---
+
+## BST- binary search tree
+  - insert
+  - search
+  - delete
+---
+
+## graph
+  - representation
+    - adjacency matrix
+    - adjacency list
+---
+
+## graph traversal
+  - BFS
+  - DFS
+---
+
+## MST - minimum spanning tree
+  - kruskal algorithm
+  - prim algorithm
+---
+
+## shortest path
+  - ont to all
+    - dijkstra algorithm
+    - bellmanford algorithm
+  - all to all
+    - floydwarshall algorithm
+---
+
 ## sorting
-  - bubble sort
-  - quick sort
+  - simple algorithm
+    - bubble sort
+    - selection sort
+    - insertion sort
   - big O of bubble sort
+---
+
+## sorting
+  - divide and conquer
+    - quick sort
+    - merge sort
   - big O of quick sort
+---
+
+## dynamic programming
+  - recursion
+  - memoization
+  - bottom-up
+
+---
+## dynamic programming
+  - fibonacci
+  - matrix path
 ---
 
 
