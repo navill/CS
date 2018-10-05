@@ -157,7 +157,7 @@ def show_list(dlist, start=True):
 if __name__=="__main__":
     dlist=DoubleLinkedList()
     print('*'*100)
-    #print('데이터 삽입 -add_first')
+    print('데이터 삽입 -add_first')
     # dlist.add_first(1)
     # dlist.add_first(2)
     # dlist.add_first(3)
@@ -174,9 +174,9 @@ if __name__=="__main__":
     dlist.insert_after(4, dlist.search_forward(3))
     show_list(dlist, start=True)
 
-    # print('데이터 삽입 - insert_before')
-    # dlist.insert_before(4, dlist.search_forward(5))
-    # show_list(dlist, start=True)
+    print('데이터 삽입 - insert_before')
+    dlist.insert_before(4, dlist.search_forward(5))
+    show_list(dlist, start=True)
 
     print('데이터 탐색')
     target=3
