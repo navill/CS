@@ -4,11 +4,9 @@ def fibo_iter(n):
     elif n == 2:
         return 1
     else:
-        current = 1; last = 0; temp = 0
+        current = 1; last = 0
         for _ in range(3, n+1):
-            temp = current
-            current += last
-            last = temp
+            current, last = current + last, current
     
         return current
 
