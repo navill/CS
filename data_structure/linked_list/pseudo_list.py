@@ -6,10 +6,15 @@ class PseudoList(DoubleLinkedList):
         for elem in args:
             self.add_last(elem)
 
+    def __len__(self):
+        return self.size()
+
     def append(self, data):
         self.add_last(data)
 
     def __find_position(self, pos):
+        if pos >=self.size():
+            raise IndexError('list index out of range')
         cur = self.head.next
         for _ in range(pos):
             cur = cur.next
@@ -35,13 +40,17 @@ class PseudoList(DoubleLinkedList):
             if cur.data == data:
                 return index
             cur = cur.next; index+=1
-        raise IndexError
+        raise IndexError('{} is not in list'.format(data))
 
     def __getitem__(self, index):
+        if index >= self.size():
+            raise IndexError('list index out of range')
         cur = self.__find_position(index)
         return cur.data
 
     def __setitem__(self, index, data):
+        if index >= self.size():
+            raise IndexError('list index out of range')
         cur = self.__find_position(index)
         cur.data = data
 
