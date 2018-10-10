@@ -61,7 +61,7 @@ class PseudoList(DoubleLinkedList):
             cur = self.tail.before
         
         self.delete_node(cur)
-        return cur
+        return cur.data
 
     def remove(self, data):
         self.delete_node(self.search_forward(data))
