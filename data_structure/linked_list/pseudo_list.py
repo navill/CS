@@ -69,12 +69,12 @@ class PseudoList(DoubleLinkedList):
     def __str__(self):
         string = '['
         cur = self.head.next
-        while cur is not self.tail.before:
+        while cur is not self.tail:
             string+=str(cur.data)
-            string+=', '
+            if cur.next is not self.tail:
+                string+=', '
             cur= cur.next
 
-        string+=str(cur.data)
         string+=']'
         return string
 
