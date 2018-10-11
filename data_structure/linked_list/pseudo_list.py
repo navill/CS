@@ -43,14 +43,10 @@ class PseudoList(DoubleLinkedList):
         raise IndexError('{} is not in list'.format(data))
 
     def __getitem__(self, index):
-        if index >= self.size():
-            raise IndexError('list index out of range')
         cur = self.__find_position(index)
         return cur.data
 
     def __setitem__(self, index, data):
-        if index >= self.size():
-            raise IndexError('list index out of range')
         cur = self.__find_position(index)
         cur.data = data
 
