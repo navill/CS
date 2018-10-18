@@ -131,13 +131,13 @@ if __name__=="__main__":
 
     print('pop')
     print(li2)
-    print("poped item : {}".format(li2.pop(0).data))
+    print("poped item : {}".format(li2.pop(0)))
     print(li2)
-    print("poped item : {}".format(li2.pop(0).data))
+    print("poped item : {}".format(li2.pop(0)))
     print(li2)
-    print("poped item : {}".format(li2.pop(0).data))
+    print("poped item : {}".format(li2.pop(0)))
     print(li2)
-    print("poped item : {}".format(li2.pop(0).data))
+    print("poped item : {}".format(li2.pop(0)))
     print(li2)
     print()
 
