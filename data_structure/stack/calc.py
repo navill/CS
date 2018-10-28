@@ -1,4 +1,4 @@
-from stack import Stack
+from stack2 import Stack
 
 class Calculator:
     def __init__(self):

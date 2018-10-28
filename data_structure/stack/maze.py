@@ -78,7 +78,6 @@ class MazeSolver:
                     stack.push(Position(self.EXIT_ROW, self.EXIT_COL, 0))
                 elif self.maze[next_row][next_col] == 0 and mark[next_row][next_col] == 0:
                     mark[next_row][next_col]=1
-                    pos.row = row; pos.col = col; pos.dir = dir
                     stack.push(Position(row, col, dir))
                     row = next_row
                     col = next_col
