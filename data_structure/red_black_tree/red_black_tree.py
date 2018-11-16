@@ -179,7 +179,7 @@ class RedBlackTree:
                     new_node.parent=parent
                     break
         #노드 삽입 후 처리
-        #self.__insert_fix(new_node)
+        self.__insert_fix(new_node)
 
     def search(self, target):
         cur=self.root
@@ -227,11 +227,6 @@ class RedBlackTree:
         return cur, rem_node
 
     def __remove_fix(self, c):
-        #child.color가 RED일 때
-        if c.color=="RED":
-            c.color="BLACK"
-            return
-
         #노드 c가 루트가 아니고 : 루트면 extra BLACK 제거 후 종료
         #노드 c가 BLACK이면 : RED이면 BLACK으로 만들고 종료
         while c.parent!=None and c.color=="BLACK":
