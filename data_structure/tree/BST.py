@@ -7,11 +7,11 @@ class BST:
     def get_root(self):
         return self.root
 
-    def preorder_traverse(self, cur, func):
+    def preorder_traverse(self, cur, func, *args, **kwargs):
         if not cur:
             return
 
-        func(cur.data)
+        func(cur, *args, **kwargs)
         self.preorder_traverse(cur.left, func)
         self.preorder_traverse(cur.right, func)
 
@@ -93,7 +93,7 @@ if __name__=="__main__":
     bst.insert(9)
     bst.insert(11)
 
-    f=lambda x: print(x, end='  ')
+    f=lambda x: print(x.data, end='  ')
 
     bst.preorder_traverse(bst.get_root(), f)
     print()
