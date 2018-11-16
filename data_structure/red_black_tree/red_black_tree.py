@@ -19,13 +19,13 @@ class RedBlackTree:
     def get_root(self):
         return self.root
 
-    def preorder_traverse(self, cur, func):
+    def preorder_traverse(self, cur, func, *args, **kwargs):
         if not cur:
             return
 
-        func(cur)
-        self.preorder_traverse(cur.left_child, func)
-        self.preorder_traverse(cur.right_child, func)
+        func(cur, *args, **kwargs)
+        self.preorder_traverse(cur.left_child, func, *args, **kwargs)
+        self.preorder_traverse(cur.right_child, func, *args, **kwargs)
 
     def __left_rotate(self, n):
         #n's right child
@@ -179,7 +179,7 @@ class RedBlackTree:
                     new_node.parent=parent
                     break
         #노드 삽입 후 처리
-        self.__insert_fix(new_node)
+        #self.__insert_fix(new_node)
 
     def search(self, target):
         cur=self.root
@@ -345,8 +345,9 @@ class RedBlackTree:
                 print("parent : {}".format(rbn.parent.key), end="")
             print()
 
-def color_changer(cur):
-    if cur.key==5:
+def color_changer(cur, *keys):
+    print(keys)
+    if cur.key in keys:
         cur.color="RED"
     else:
         cur.color="BLACK"
@@ -379,8 +380,8 @@ if __name__=="__main__":
     # rbt.insert(9)
     # rbt.insert(8)
     # rbt.insert(10)
-    # rbt.preorder_traverse(rbt.get_root(), color_changer)
-    #rbt.preorder_traverse(rbt.get_root(), rbt.print_node)
+    # rbt.preorder_traverse(rbt.get_root(), color_changer, 7)
+    # rbt.preorder_traverse(rbt.get_root(), rbt.print_node)
 
     #delete - case 2-2, case 2-3
     # rbt.insert(3)
@@ -391,7 +392,7 @@ if __name__=="__main__":
     # rbt.insert(4)
     # rbt.insert(6)
     # rbt.insert(8)
-    # rbt.preorder_traverse(rbt.get_root(), color_changer)
+    # rbt.preorder_traverse(rbt.get_root(), color_changer, 5)
 
     # rbt.remove(2)
     # print("result")
