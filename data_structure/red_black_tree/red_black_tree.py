@@ -235,8 +235,9 @@ class RedBlackTree:
                 #s: sibling
                 s=c.parent.right_child
 
-                print("before balancing")
-                self.preorder_traverse(self.root, self.print_node)
+                # debug code
+                # print("before balancing")
+                # self.preorder_traverse(self.root, self.print_node)
 
                 #case 1: s.color = RED
                 #case 2로 만든다
@@ -245,10 +246,11 @@ class RedBlackTree:
                     c.parent.color, s.color=s.color, c.parent.color
                     #LEFT-ROTATE(c.parent)
                     self.__left_rotate(c.parent)
-
-                    print("after CASE 1")
-                    self.preorder_traverse(self.root, self.print_node)
-                    print("\n")
+                    
+                    #debug code
+                    # print("after CASE 1")
+                    # self.preorder_traverse(self.root, self.print_node)
+                    # print("\n")
                 #case 2: s.color = BLACK
                 else:
                     #case 2-1: s.left and s.right --> BLACK
@@ -258,18 +260,20 @@ class RedBlackTree:
                         #give black to p
                         c=c.parent
 
-                        print("after CASE 2-1")
-                        self.preorder_traverse(self.root, self.print_node)
-                        print("\n")
+                        #debug code
+                        # print("after CASE 2-1")
+                        # self.preorder_traverse(self.root, self.print_node)
+                        # print("\n")
 
                     #case 2-2: s.left --> RED
                     elif s.right_child.color=="BLACK":
                         s.color, s.left_child.color=s.left_child.color, s.color
                         self.__right_rotate(s)
 
-                        print("after CASE 2-2")
-                        self.preorder_traverse(self.root, self.print_node)
-                        print("\n")
+                        #debug code
+                        # print("after CASE 2-2")
+                        # self.preorder_traverse(self.root, self.print_node)
+                        # print("\n")
                     #case 2-3: s.right --> RED
                     else:
                         s.color=c.parent.color
@@ -277,9 +281,11 @@ class RedBlackTree:
                         self.__left_rotate(c.parent)
                         #while문을 빠져나간다
                         c=self.root
-                        print("after CASE 2-3")
-                        self.preorder_traverse(self.root, self.print_node)
-                        print("\n")
+
+                        #debug code
+                        # print("after CASE 2-3")
+                        # self.preorder_traverse(self.root, self.print_node)
+                        # print("\n")
             #노드 c가 오른쪽 자식일 때
             else:
                 s=c.parent.left_child
@@ -301,7 +307,6 @@ class RedBlackTree:
                         c=self.root        
         c.color="BLACK"
         
-
     def remove(self, target):
         self.root, removed_node=self.__remove_recursion(self.root, target)
 
