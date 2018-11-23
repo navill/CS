@@ -48,16 +48,16 @@ class Graph:
         #TV={} : MST 정점의 집합, 시작 노드부터 하나씩 채워나간다
         TV=set()
 
-        #w_from_list : 각 정점의 w와 from 값을 담아두기 위한 배열
-        w_from_list=[None for _ in range(self.vertex_num)]
+        #w_list : 각 정점의 w 값을 담아두기 위한 배열
+        w_list=[None for _ in range(self.vertex_num)]
         #min heap에 w와 from을 가진 정점을 담아둔다
         #heap 초기화 : w->inf, from->None
         h=MinHeap()
         for i in range(1, self.vertex_num):
-            w_from_list[i]=[math.inf, None]
+            w_list[i]=math.inf
             h.push(Element(i, math.inf, None))
         #시작 노드인 0은 w->0, from->None
-        w_from_list[0]=[0, None]
+        w_list[0]=0
         h.push(Element(0, 0, None))
 
         while not h.is_empty():
@@ -77,15 +77,10 @@ class Graph:
             while u:
                 #u가 트리 밖의 정점이고
                 #기존 w 값보다 w(u, v)이 작다면 업데이트
-                if u.vertex not in TV and u.weight < w_from_list[u.vertex][0]:
-                    #힙에 있는 변경 전 w
-                    cur_w=w_from_list[u.vertex][0]
-                    #w 업데이트
-                    w_from_list[u.vertex][0]=u.weight
-                    #from 업데이트
-                    w_from_list[u.vertex][1]=v.v
-                    
-                    h.decrease_weight(cur_w, Element(u.vertex, u.weight, v.v))
+                if u.vertex not in TV and u.weight < w_list[u.vertex]:
+                    #w_list 업데이트
+                    w_list[u.vertex]=u.weight
+                    h.decrease_weight(Element(u.vertex, u.weight, v.v))
                 u=u.link
 
         return mst

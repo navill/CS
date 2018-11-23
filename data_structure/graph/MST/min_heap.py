@@ -43,7 +43,6 @@ class MinHeap:
             cur_idx=self.__get_parent_idx(cur_idx)
         self.arr[cur_idx]=item
 
-
     def __get_smaller_child_idx(self, idx):
         if self.heapsize < self.__get_left_child_idx(idx):
             return None
@@ -88,12 +87,12 @@ class MinHeap:
         return self.arr[1]
 
     #프림 알고리즘을 위해 추가된 함수
-    def decrease_weight(self, cur_w, new_elem):
+    def decrease_weight(self, new_elem):
         for i in range(1, self.heapsize+1):
-            if self.arr[i].w==cur_w and self.arr[i].v==new_elem.v:
+            if self.arr[i].v==new_elem.v:
                 cur=i
                 break
-        
+
         while cur!= 1 and new_elem.w < self.arr[self.__get_parent_idx(cur)].w:
             self.arr[cur]=self.arr[self.__get_parent_idx(cur)]
             cur=self.__get_parent_idx(cur)
