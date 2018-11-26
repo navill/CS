@@ -22,10 +22,6 @@ class Graph:
     def __init__(self, vnum):
         self.adjacency_matrix=[[None for _ in range(vnum)] for _ in range(vnum)]
         self.vertex_num=vnum
-        #출발 정점에서 S에 있는 정점만 거쳐 v에 도달하는 경로의 길이
-        self.distance=[None for _ in range(vnum)]
-        #predecessor
-        self.p=[None for _ in range(vnum)]
 
     def insert_edge(self, u, v, w):
         self.adjacency_matrix[u][v]=w
