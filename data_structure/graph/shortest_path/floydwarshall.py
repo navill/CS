@@ -12,7 +12,7 @@ class Graph:
     @staticmethod
     def print_shortest_path(sp, source, dest):
         #경로 중 source와 dest를 제외하고 출력한다
-        if not sp.path[source][dest]:
+        if sp.path[source][dest]==None:
             return
         
         # i~k까지 출력
@@ -52,26 +52,60 @@ class Graph:
         return sp
 
 if __name__=="__main__":
-    g=Graph(4)
-    g.insert_edge(0, 1, 12)
-    g.insert_edge(0, 2, 3)
-    g.insert_edge(1, 3, 15)
-    g.insert_edge(1, 2, 5)
-    g.insert_edge(2, 0, 7)
-    g.insert_edge(2, 1, 6)
-    g.insert_edge(2, 3, 2)
-    g.insert_edge(3, 1, 13)
-    g.insert_edge(3, 2, 6)
+    # simple example
+    # g=Graph(4)
+    # g.insert_edge(0, 1, 12)
+    # g.insert_edge(0, 2, 3)
+    # g.insert_edge(1, 3, 15)
+    # g.insert_edge(1, 2, 5)
+    # g.insert_edge(2, 0, 7)
+    # g.insert_edge(2, 1, 6)
+    # g.insert_edge(2, 3, 2)
+    # g.insert_edge(3, 1, 13)
+    # g.insert_edge(3, 2, 6)
+
+    # source=0
+    # dest=3
+
+    # complicated example
+    g=Graph(6)
+    g.insert_edge(0, 1, 5)
+    g.insert_edge(0, 2, 7)
+    g.insert_edge(0, 5, 9)
+    g.insert_edge(1, 3, 4)
+    g.insert_edge(1, 5, 2)
+    g.insert_edge(2, 0, 8)
+    g.insert_edge(2, 4, 6)
+    g.insert_edge(3, 0, 6)
+    g.insert_edge(3, 4, 2)
+    g.insert_edge(3, 5, 3)
+    g.insert_edge(4, 0, 8)
+    g.insert_edge(4, 2, 3)
+    g.insert_edge(4, 5, 10)
+    g.insert_edge(5, 1, 7)
+    g.insert_edge(5, 2, 4)
+
+    source=2
+    dest=3
 
     sp=g.floyd_warshall()
 
+    print("A mat")
     for i in range(g.vertex_num):
         for j in range(g.vertex_num):
-            print("{:3}".format(sp.A[i][j]), end="")
+            print("{}".format(sp.A[i][j]).rjust(4), end="")
         print()
+    print()
 
-    source=0
-    dest=3
+    print("path mat")
+    for i in range(g.vertex_num):
+        for j in range(g.vertex_num):
+            if sp.path[i][j]==None:
+                print("{} ".format("N").rjust(4), end="")
+            else:
+                print("{} ".format(sp.path[i][j]).rjust(4), end="")
+        print()
+    print()
 
     print("path from {} to {}".format(source, dest))
     print("{}".format(source), end="  ")
