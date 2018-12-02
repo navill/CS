@@ -2,13 +2,15 @@ from queue1 import Queue
 from stack1 import Stack
 
 class GNode:
-    def __init__(self, index=None):
-        self.index=index
+    def __init__(self, vertex=None):
+        self.vertex=vertex
         self.link=None
 
 class Graph:
     def __init__(self):
+        #인접 리스트로 구현
         self.adjacency_list=[]
+        #방문 여부 체크
         self.visited=[]
 
     def add_vertex(self, vnum=1):
@@ -17,6 +19,7 @@ class Graph:
     
     def __add_node(self, vertex, node):
         cur=self.adjacency_list[vertex]
+        #아직 에지가 하나도 없다면
         if not cur:
             self.adjacency_list[vertex]=node
         else:
@@ -55,9 +58,9 @@ class Graph:
             while u:
                 #아직 방문하지 않은 노드라면
                 #큐에 넣고 방문 체크!
-                if not self.visited[u.index]:
-                    q.enqueue(u.index)
-                    self.visited[u.index]=True
+                if not self.visited[u.vertex]:
+                    q.enqueue(u.vertex)
+                    self.visited[u.vertex]=True
                 u=u.link
 
     def __dfs_recursion(self, v):
@@ -68,8 +71,8 @@ class Graph:
 
         u=self.adjacency_list[v]
         while u:
-            if not self.visited[u.index]:
-                self.__dfs_recursion(u.index)
+            if not self.visited[u.vertex]:
+                self.__dfs_recursion(u.vertex)
             u=u.link
 
     def dfs(self, v):
@@ -98,11 +101,11 @@ class Graph:
             #인접 리스트를 받아온다.
             u=self.adjacency_list[v]
             while u:
-                if not self.visited[u.index]:
-                    s.push(u.index)
+                if not self.visited[u.vertex]:
+                    s.push(u.vertex)
                     #방문 체크 및 방문
-                    self.visited[u.index]=True
-                    print(u.index, end="  ")
+                    self.visited[u.vertex]=True
+                    print(u.vertex, end="  ")
                     #아직 방문하지 않은 정점을 방문했으므로
                     is_visited=True
                     break
