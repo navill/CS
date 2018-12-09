@@ -8,7 +8,6 @@ class DisjointSet:
         return i
 
     def simple_union(self, i, j):
-        self.parent[j]+=self.parent[i]
         self.parent[i]=j
 
     def collapsing_find(self, i):
@@ -48,23 +47,20 @@ class DisjointSet:
 if __name__=="__main__":
     ds=DisjointSet(5)
 
+    # ds.simple_union(1, 2)
     # ds.simple_union(4, 2)
-    # ds.simple_union(0, 4)
-    # ds.simple_union(1, 0)
-    # ds.simple_union(3, 1)
+    # ds.simple_union(3, 0)
     # print(ds.parent)
+    
+    # for i in range(5):
+    #     print("parent[{}] : {}".format(i, ds.simple_find(i)))
 
-    # print(ds.simple_find(4), ds.simple_find(0),
-    #     ds.simple_find(1), ds.simple_find(3))
-
-    # print(ds.collapsing_find(3))
-    # print(ds.parent)
-
-    ds.simple_union(4, 2)
-    ds.simple_union(0, 4)
-    ds.simple_union(3, 1)
-    ds.parent[2]=-3
-    ds.parent[1]=-2
-
-    ds.weighted_union(2, 1)
+    ds=DisjointSet(5)
+    ds.parent[2]=-5
+    ds.parent[4]=2
+    ds.parent[0]=4
+    ds.parent[1]=0
+    ds.parent[3]=1
+    print(ds.parent)
+    print("the root is {}".format(ds.collapsing_find(3)))
     print(ds.parent)
