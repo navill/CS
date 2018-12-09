@@ -8,6 +8,7 @@ class DisjointSet:
         return i
 
     def simple_union(self, i, j):
+        self.parent[j]+=self.parent[i]
         self.parent[i]=j
 
     def collapsing_find(self, i):
