@@ -42,7 +42,45 @@ class Graph:
 
         self.edge_list.append(Edge(u, v, weight))
 
-    def MST_prim(self):
+    def get_min_v(self, w):
+        _min=math.inf
+        min_v=None
+        for i in range(self.vertex_num):
+            if w[i] < _min:
+                _min=w[i]
+                min_v=i
+        return min_v
+
+    def MST_prim1(self):
+        #TE={}
+        mst=Graph(); mst.add_vertex(self.vertex_num)
+        #TV={}
+        TV=set()
+
+        w=[math.inf for _ in range(self.vertex_num)]
+        _from=[None for _ in range(self.vertex_num)]
+
+        w[0]=0
+        #|TV| < |V|
+        while len(TV) < self.vertex_num:
+            v=self.get_min_v(w)
+            #TV <- TV U {v}
+            TV.add(v)
+            #TE <- TE U {(v, from[v])}
+            if _from[v]!=None:
+                mst.insert_edge(v, _from[v], w[v])
+            #trick
+            w[v]=math.inf
+            #u adjacent to v
+            u=self.adjacency_list[v]
+            while u:
+                if u.vertex not in TV and u.weight < w[u.vertex]:
+                    w[u.vertex]=u.weight
+                    _from[u.vertex]=v
+                u=u.link
+        return mst
+
+    def MST_prim2(self):
         #최종적으로 만들어질 MST
         mst=Graph(); mst.add_vertex(self.vertex_num)
         #TV={} : MST 정점의 집합, 시작 노드부터 하나씩 채워나간다
@@ -103,7 +141,8 @@ if __name__=="__main__":
     g.insert_edge(3, 4, 4)
     g.insert_edge(3, 5, 14)
 
-    mst=g.MST_prim()
+    #mst=g.MST_prim1()
+    mst=g.MST_prim2()
 
     mst.print_edges()
     
