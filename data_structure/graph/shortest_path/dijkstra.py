@@ -46,19 +46,19 @@ class Graph:
         distance[s]=0
 
         while len(S) < self.vertex_num:
-            #S에 속하지 않으면서 distance가 가장 작은 정점 u
-            u=self.find_min(distance, S)
-            #S=S U {u}
-            S.add(u)
-            for v in range(self.vertex_num):
-                w=self.adjacency_matrix[u][v]
-                #w가 None이 아니면 v가 u에 adjacent
+            #S에 속하지 않으면서 distance가 가장 작은 정점 v
+            v=self.find_min(distance, S)
+            #S=S U {v}
+            S.add(v)
+            for u in range(self.vertex_num):
+                w=self.adjacency_matrix[v][u]
+                #w가 None이 아니면 u가 v에 adjacent
                 #relaxation
-                #if distance[v] > distance[u]+w
-                #then distance[v] = distance[u]+w
-                if w!=None and v not in S and distance[v] > distance[u]+w:
-                    distance[v] = distance[u]+w
-                    p[v]=u
+                #if distance[u] > distance[v]+w
+                #then distance[u] = distance[v]+w
+                if w!=None and u not in S and distance[u] > distance[v]+w:
+                    distance[u] = distance[v]+w
+                    p[u]=v
         sp=ShortestPath(s, distance, p)
         return sp
 
