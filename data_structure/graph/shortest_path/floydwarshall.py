@@ -79,7 +79,6 @@ if __name__=="__main__":
     g.insert_edge(3, 0, 6)
     g.insert_edge(3, 4, 2)
     g.insert_edge(3, 5, 3)
-    g.insert_edge(4, 0, 8)
     g.insert_edge(4, 2, 3)
     g.insert_edge(4, 5, 10)
     g.insert_edge(5, 1, 7)
