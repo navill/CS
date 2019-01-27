@@ -1,3 +1,4 @@
 *.pyc
 .vscode
+*.pptx
 __pycache__
