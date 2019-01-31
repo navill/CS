@@ -22,7 +22,7 @@ class Calculator:
         elif oprt=='(':
             return 5
 
-    def convert_to_postifx(self):
+    def convert_to_postfix(self):
         exp_list=[]
         oprt_stack=Stack()
 
