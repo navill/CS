@@ -44,7 +44,7 @@ class DataHandler:
             self.cache['standard_deviation']=self.evaluator.get_std_dev(self.get_variance())
         return self.cache.get('standard_deviation')
 
-    def evaluate_class(self, total_avrg, sd):
+    def evaluate_class(self, total_avrg, sd=20):
         """
         evaluate_class(total_avrg, sd)->None
         total_avrg : 학년 전체 성적 평균
@@ -53,13 +53,13 @@ class DataHandler:
         avrg=self.get_average()
         std_dev=self.get_standard_deviation()
 
-        if avrg < 50 and std_dev > 20:
+        if avrg < 50 and std_dev > sd:
             print('성적이 너무 저조하고 학생들의 실력 차이가 너무 크다.')
-        elif avrg > 50 and std_dev > 20:
+        elif avrg > 50 and std_dev > sd:
             print('성적은 평균 이상이지만 학생들의 실력 차이가 크다. 주의 요망!')
-        elif avrg < 50 and std_dev < 20:
+        elif avrg < 50 and std_dev < sd:
             print('학생들의 실력 차이는 크지 않지만 성적이 너무 저조하다. 주의 요망!')
-        elif avrg > 50 and std_dev < 20:
+        elif avrg > 50 and std_dev < sd:
             print('성적도 평균 이상이고 학생들의 실력 차이도 크지 않다.')
 
     def get_evaluation(self, total_avrg, sd=20):
