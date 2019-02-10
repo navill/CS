@@ -1,12 +1,28 @@
 from openpyxl import *
+from pickle import load
+
 import math
 
+#for openpyxl
+'''
 raw_data={}
 wb=load_workbook('class_1.xlsx')
 ws=wb.active
 g=ws.rows
 for name_cell, score_cell in g:
     raw_data[name_cell.value]=score_cell.value
+'''
+
+#for pickle
+f=open('class_1.dat', 'rb')
+raw_data={}
+try:
+    while True:
+        data=load(f)
+        raw_data.update(data)
+except EOFError:
+    pass
+
 
 scores=list(raw_data.values())
 

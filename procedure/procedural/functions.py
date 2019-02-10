@@ -16,6 +16,18 @@ def get_data_from_excel(filename):
     
     return raw_data
 
+def get_data_from_file(filename):
+    raw_data={}
+    f=open(filename, 'rb')
+    try:
+        while True:
+            data=load(f)
+            raw_data.update(data)
+    except EOFError:
+        pass
+    return raw_data
+
+
 def get_average(scores):
     """
     average(scores)->integer
