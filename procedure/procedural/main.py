@@ -3,6 +3,7 @@ from functions import *
 #학년 전체 평균 : 50점
 
 raw_data=get_data_from_excel('class_1.xlsx')
+#raw_data=get_data_from_file('class_1.dat')
 scores=list(raw_data.values())
 
 avrg=get_average(scores)

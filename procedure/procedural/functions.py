@@ -1,4 +1,5 @@
 from openpyxl import load_workbook
+from pickle import load
 import math
 
 def get_data_from_excel(filename):
