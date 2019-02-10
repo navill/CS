@@ -48,7 +48,7 @@ def get_variance(scores, avrg):
 def get_std_dev(variance):
     return round(math.sqrt(variance),1)
 
-def evaluate_class(avrg, total_avrg, std_dev, sd):
+def evaluate_class(avrg, total_avrg, std_dev, sd=20):
     """
     evaluate_class(avrg, total_avrg, std_dev, sd)->None
     avrg : 반 성적 평균
@@ -56,13 +56,13 @@ def evaluate_class(avrg, total_avrg, std_dev, sd):
     std_dev : 반의 표준편차
     sd : 원하는 표준편차 기준
     """
-    if avrg < 50 and std_dev > 20:
+    if avrg < 50 and std_dev > sd:
         print('성적이 너무 저조하고 학생들의 실력 차이가 너무 크다.')
-    elif avrg > 50 and std_dev > 20:
+    elif avrg > 50 and std_dev > sd:
         print('성적은 평균 이상이지만 학생들의 실력 차이가 크다. 주의 요망!')
-    elif avrg < 50 and std_dev < 20:
+    elif avrg < 50 and std_dev < sd:
         print('학생들의 실력 차이는 크지 않지만 성적이 너무 저조하다. 주의 요망!')
-    elif avrg > 50 and std_dev < 20:
+    elif avrg > 50 and std_dev < sd:
         print('성적도 평균 이상이고 학생들의 실력 차이도 크지 않다.')
 
 
