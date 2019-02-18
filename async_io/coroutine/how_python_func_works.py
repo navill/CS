@@ -28,3 +28,15 @@ caller_frame=frame.f_back
 print(caller_frame.f_code.co_name)
 
 
+# STACK                                           HEAP
+# PyEval_EvalFrameEx(PyFrameObject * f)---------->PyFrameObject
+#                                                 - f_back
+#                                                 - f_code---------> PyCodeObject : foo's bytecode
+# 
+# PyEval_EvalFrameEx(PyFrameObject * f)---------->PyFameObject
+#                                                 - f_back --> foo's PyFrameObject
+#                                                 - f_code----------> PyCodeObject : bar's
+# 
+#                                               
+
+
