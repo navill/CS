@@ -31,9 +31,6 @@ class LStack:
 
     def push(self, data):
         new_node = Node(data)
-        if self.empty():
-            self.top = new_node
-            return
         new_node.next = self.top
         self.top=new_node
 

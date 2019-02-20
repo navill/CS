@@ -19,7 +19,7 @@ class Node:
     def next(self, n):
         self.__next=n
 
-class LQueue:
+class Queue:
     def __init__(self):
         self.front = None
         self.rear = None
