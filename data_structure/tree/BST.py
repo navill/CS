@@ -7,11 +7,11 @@ class BST:
     def get_root(self):
         return self.root
 
-    def preorder_traverse(self, cur, func, *args, **kwargs):
+    def preorder_traverse(self, cur, func):
         if not cur:
             return
 
-        func(cur, *args, **kwargs)
+        func(cur)
         self.preorder_traverse(cur.left, func)
         self.preorder_traverse(cur.right, func)
 
