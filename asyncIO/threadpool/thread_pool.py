@@ -11,7 +11,8 @@ def parse_links(response):
     anchors=soup.find_all('a')
     links=[]
     for anchor in anchors:
-        links.append(anchor['href'])
+        if anchor.get('href'):
+            links.append(anchor['href'])
     return links
 
 class FetchThread(threading.Thread):
@@ -41,7 +42,8 @@ class FetchThread(threading.Thread):
             self.pool.cv.notify_all()
             self.pool.cv.release()
             time.sleep(0.02)
-
+        ss.close()
+        
     def run(self):
         while True:
             self.pool.cv.acquire()
