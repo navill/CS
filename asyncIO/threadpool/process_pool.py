@@ -22,7 +22,7 @@ class FetchProcess(multiprocessing.Process):
 
     def fetch(self, url):
         sock=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        ss=ssl.wrap_socket(sock, ssl_version=ssl.PROTOCOL_SSLv23)
+        ss=ssl.wrap_socket(sock, ssl_version=ssl.PROTOCOL_TLS)
         ss.connect(('xkcd.com', 443))
         request='GET {} HTTP/1.1\r\nHost: xkcd.com\r\nConnection: close\r\n\r\n'.format(url)
         ss.send(request.encode('ascii'))
