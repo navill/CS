@@ -7,6 +7,8 @@ import socket
 import ssl 
 from selectors import DefaultSelector, EVENT_WRITE, EVENT_READ 
 from bs4 import BeautifulSoup
+import time
+import pprint
 
 urls_go=set(['/'])
 urls_done=set()
@@ -30,36 +32,33 @@ class Fetcher:
 		try:
 			self.ssock.connect(('xkcd.com', 443))
 		except:
-			pass 
-	    	
+			pass
+
 		selector.register(self.ssock.fileno(), EVENT_WRITE, self.connected) 
 	
 	def connected(self, key, mask):
+		cert=self.ssock.getpeercert()
+		pprint.pprint(cert)
+
 		selector.unregister(self.ssock.fileno())
 		request='GET {} HTTP1.0\r\nHost: xkcd.com\r\n\r\n'.format(self.url)
 			
 		try:	
 			self.ssock.sendall(request.encode())
-		except ssl.SSLWantReadError:
-			self.ssock.recv(1024)
-		except ssl.SSLWantWriteError:
-			pass	
-		
+		except (ssl.SSLWantReadError, ssl.SSLWantWriteError):
+			pass
+
 		selector.register(self.ssock.fileno(), EVENT_READ, self.read_response)
 		
 	def read_response(self, key, mask):
 		try:	
 			chunk=self.ssock.recv(4096)
-		except ssl.SSLWantReadError:
-			self.ssock.recv(1024)	
-		except ssl.SSLWantWriteError:
+		except (ssl.SSLWantReadError, ssl.SSLWantWriteError):
 			pass
-
 		
 		if chunk:
 			self.response+=chunk
 		else:
-			print(self.response)
 			selector.unregister(self.ssock.fileno())
 			links=self.parse_links()
 
@@ -79,13 +78,16 @@ class Fetcher:
 				links.add(anchor['href'])
 		
 		return links
+	
+	def print_response(self):
+		soup=BeautifulSoup(self.response, 'html.parser')
+		print(soup.prettify())
 
 def loop():
 	while True: 
 		events=selector.select()
 		for key, mask in events:
 			callback=key.data
-			print(callback.__name__)
 			callback(key, mask)
 
 fetcher=Fetcher('/')
