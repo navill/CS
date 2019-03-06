@@ -1,51 +1,75 @@
-from asyncio import Queue
 import asyncio
-import aiohttp
 from bs4 import BeautifulSoup
+from urllib.parse import urlsplit, urljoin
 
 class Crawler:
 	def __init__(self, root_url):
-		self.max_tasks=10
-		self.q=Queue()
+		self.max_workers=10
+		self.q=asyncio.Queue()
+		self.root_url=root_url
 		self.seen_urls=set()
-
-		self.q.put(root_url)
+		self.q.put_nowait(root_url)
 
 	async def crawl(self):
-		self.session=aiohttp.ClientSession(loop=loop)
-		workers=[asyncio.Task(self.work()) for _ in range(self.max_tasks)]
+		workers=[asyncio.create_task(self.worker()) for _ in range(self.max_workers)]
 
 		await self.q.join()
+
 		for w in workers:
 			w.cancel()
-		self.sesson.close()
 
-	async def work(self):
+		await asyncio.gather(*workers, return_exceptions=True)
+
+	async def worker(self):
 		while True:
-			url = await self.q.get()
+			url=await self.q.get()
 			await self.fetch(url)
 			self.q.task_done()
 
 	async def fetch(self, url):
-		response = await self.session.get(url)
-		links = await self.parse_links(reponse)
+		self.seen_urls.add(url)
+		print('*'*200)
+		r=urlsplit(url)
+		print(url)
+		if r.scheme=='https':
+			reader, writer=await asyncio.open_connection(r.hostname, 443, ssl=True)
+		else:
+			reader, writer=await asyncio.open_connection(r.hostname, 80)
+		writer.write('GET {} HTTP/1.0\r\nHost: xkcd.com\r\n\r\n'.format(r.path).encode())
+
+		response=b''
+
+		while True:
+			line=await reader.readline()
+			if not line:
+				break
+
+			response+=line
+	
+		self.print_response(response)
+		links=self.parse_links(response)
 		for link in links.difference(self.seen_urls):
 			self.q.put_nowait(link)
-		self.seen_urls.update(links)
-		print(response)
-		
-	async def parse_links(self, response):
+
+	def print_response(self, response):
+		soup=BeautifulSoup(response, 'html.parser')
+		print(soup.prettify())
+	
+	def make_whole_url(self, link):
+		url=urljoin(self.root_url, link)
+		return url
+
+	def parse_links(self, response):
 		soup=BeautifulSoup(response, 'html.parser')
 		anchors=soup.find_all('a')
-		links=[]
+		links=set()
 		for anchor in anchors:
 			if anchor.get('href'):
-				links.append(anchor['href'])
+				links.add(self.make_whole_url(anchor['href']))
 		return links
-
-
-
+			
+crawler=Crawler('https://xkcd.com/')
 loop=asyncio.get_event_loop()
-crawler=Crawler('https://xkcd.com')
 loop.run_until_complete(crawler.crawl())
+
 

@@ -43,10 +43,7 @@ class Fetcher:
 		selector.unregister(self.ssock.fileno())
 		request='GET {} HTTP1.0\r\nHost: xkcd.com\r\n\r\n'.format(self.url)
 			
-		try:	
-			self.ssock.sendall(request.encode())
-		except (ssl.SSLWantReadError, ssl.SSLWantWriteError):
-			pass
+		self.ssock.sendall(request.encode())
 
 		selector.register(self.ssock.fileno(), EVENT_READ, self.read_response)
 		
@@ -54,7 +51,7 @@ class Fetcher:
 		try:	
 			chunk=self.ssock.recv(4096)
 		except (ssl.SSLWantReadError, ssl.SSLWantWriteError):
-			pass
+			print('error')
 		
 		if chunk:
 			self.response+=chunk
