@@ -6,6 +6,10 @@ import threading
 import time
 import os
 
+def print_response(response):
+    soup=BeautifulSoup(response, 'html.parser')
+    print(soup.prettify())
+
 def parse_links(response):
     soup=BeautifulSoup(response, 'html.parser')
     anchors=soup.find_all('a')
@@ -21,18 +25,18 @@ class FetchThread(threading.Thread):
         self.pool=pool
 
     def fetch(self, url):
-        sock=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        ss=ssl.wrap_socket(sock, ssl_version=ssl.PROTOCOL_TLS)
-        ss.connect(('xkcd.com', 443))
-        request='GET {} HTTP/1.1\r\nHost: xkcd.com\r\nConnection: close\r\n\r\n'.format(url)
-        ss.send(request.encode('ascii'))
+        context=ssl.create_default_context()
+        ssock=context.wrap_socket(socket.socket(socket.AF_INET), server_hostname='xkcd.com')
+        ssock.connect(('xkcd.com', 443))
+        request='GET {} HTTP/1.0\r\nHost: xkcd.com\r\n\r\n'.format(url)
+        ssock.sendall(request.encode())
         response=b''
-        chunk=ss.recv(4096)
+        chunk=ssock.recv(4096)
         while chunk:
             response+=chunk
-            chunk=ss.recv(4096)
+            chunk=ssock.recv(4096)
 
-        print(response)
+        print_response(response)
         links=parse_links(response)
         
         if links:
@@ -42,7 +46,7 @@ class FetchThread(threading.Thread):
             self.pool.cv.notify_all()
             self.pool.cv.release()
             time.sleep(0.02)
-        ss.close()
+        ssock.close()
         
     def run(self):
         while True:
@@ -86,5 +90,3 @@ class MyThreadPool:
 
 if __name__=="__main__":
     tp=MyThreadPool()
-
-

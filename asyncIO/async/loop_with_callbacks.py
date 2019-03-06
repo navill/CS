@@ -7,6 +7,8 @@ import socket
 import ssl 
 from selectors import DefaultSelector, EVENT_WRITE, EVENT_READ 
 from bs4 import BeautifulSoup
+import time
+import pprint
 
 urls_go=set(['/'])
 urls_done=set()
@@ -17,35 +19,47 @@ class Fetcher:
 	def __init__(self, url):
 		self.response=b''
 		self.url=url
+		self.context=None
 		self.sock=None
-		self.ss=None
+		self.ssock=None
 
 	def fetch(self):
-		self.sock=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		self.context=ssl.create_default_context()
+		self.sock=socket.socket(socket.AF_INET)
 		self.sock.setblocking(False)
-		self.ss=ssl.wrap_socket(self.sock, ssl_version=ssl.PROTOCOL_TLS)
+		self.ssock=self.context.wrap_socket(self.sock, server_hostname='xkcd.com')
 		
 		try:
-			self.ss.connect(('xkcd.com', 443))
+			self.ssock.connect(('xkcd.com', 443))
 		except:
-			pass 
-	    	
-		selector.register(self.ss.fileno(), EVENT_WRITE, self.connected) 
+			pass
+
+		selector.register(self.ssock.fileno(), EVENT_WRITE, self.connected) 
 	
 	def connected(self, key, mask):
-		selector.unregister(self.ss.fileno())
-		request='GET {} HTTP1.1\r\nHost: xkcd.com\r\nConnection: close\r\n\r\n'.format(self.url)
+		cert=self.ssock.getpeercert()
+		pprint.pprint(cert)
+
+		selector.unregister(self.ssock.fileno())
+		request='GET {} HTTP1.0\r\nHost: xkcd.com\r\n\r\n'.format(self.url)
 			
-		self.ss.send(request.encode())		
-		selector.register(self.ss.fileno(), EVENT_READ, self.read_response)
+		try:	
+			self.ssock.sendall(request.encode())
+		except (ssl.SSLWantReadError, ssl.SSLWantWriteError):
+			pass
+
+		selector.register(self.ssock.fileno(), EVENT_READ, self.read_response)
 		
 	def read_response(self, key, mask):
-		chunk=self.ss.recv(4096)
+		try:	
+			chunk=self.ssock.recv(4096)
+		except (ssl.SSLWantReadError, ssl.SSLWantWriteError):
+			pass
+		
 		if chunk:
 			self.response+=chunk
 		else:
-			print(self.response)
-			selector.unregister(self.ss.fileno())
+			selector.unregister(self.ssock.fileno())
 			links=self.parse_links()
 
 			for link in links.difference(urls_done):
@@ -64,13 +78,16 @@ class Fetcher:
 				links.add(anchor['href'])
 		
 		return links
+	
+	def print_response(self):
+		soup=BeautifulSoup(self.response, 'html.parser')
+		print(soup.prettify())
 
 def loop():
 	while True: 
 		events=selector.select()
 		for key, mask in events:
 			callback=key.data
-			print(callback.__name__)
 			callback(key, mask)
 
 fetcher=Fetcher('/')
