@@ -61,9 +61,15 @@ def check_final_winner(win_list, how_many):
 		else None
 	
 def play():
-	user_num_games=int(input("1:3판2선승, 2: 5판3선승: "))
-	while user_num_games!=1 and user_num_games!=2:
-		user_num_games=int(input("다시 입력해주세요 : "))
+	while True:
+		try:
+			user_num_games=int(input("1:3판2선승, 2: 5판3선승: "))
+			if user_num_games!= 1 and user_num_games!=2:
+				continue
+			else:
+				break
+		except ValueError:
+			continue
 	
 	num_games= 3 if user_num_games==1 else 5
 
