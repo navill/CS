@@ -4,7 +4,7 @@ win_list=[]
 
 def get_player_choice():
 	player=input("당신의 선택은 : ")
-	while player != '바위' and player != '가위' and player.upper() != '보':
+	while player != '바위' and player != '가위' and player != '보':
 		player=input('다시 입력해주세요 : ')
 	return player
 
