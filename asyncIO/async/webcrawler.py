@@ -28,14 +28,14 @@ class Crawler:
 
 	async def fetch(self, url):
 		self.seen_urls.add(url)
-		print('*'*200)
+		print('*'*100)
 		r=urlsplit(url)
 		print(url)
 		if r.scheme=='https':
 			reader, writer=await asyncio.open_connection(r.hostname, 443, ssl=True)
 		else:
 			reader, writer=await asyncio.open_connection(r.hostname, 80)
-		writer.write('GET {} HTTP/1.0\r\nHost: xkcd.com\r\n\r\n'.format(r.path).encode())
+		writer.write('GET {} HTTP/1.0\r\nHost: {}\r\n\r\n'.format(r.path, r.hostname).encode())
 
 		response=b''
 

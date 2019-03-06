@@ -11,7 +11,7 @@ def print_response(response):
 async def fetcher():
 	url='https://xkcd.com/'
 	r=urlsplit(url)
-	reader, writer=await asyncio.open_connection(r.netloc, 443, ssl=True)
+	reader, writer=await asyncio.open_connection(r.hostname, 443, ssl=True)
 
 	writer.write('GET {} HTTP/1.0\r\nHost: xkcd.com\r\n\r\n'.format(r.path).encode())
 	response=b''	
