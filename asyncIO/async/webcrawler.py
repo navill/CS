@@ -28,7 +28,7 @@ class Crawler:
 
 	async def fetch(self, url):
 		self.seen_urls.add(url)
-		print('*'*100)
+		print('*'*80)
 		r=urlsplit(url)
 		print(url)
 		if r.scheme=='https':
