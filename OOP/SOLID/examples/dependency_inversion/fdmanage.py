@@ -46,5 +46,11 @@ class SocketFDReader(FDReader):
 		return self.buf
 
 class STDFDReader(FDReader):
-    def read(self):
-        pass
+	def read(self):
+		buf=input('# ')
+		if not buf:
+			return ''
+		buf+='\n'
+		return buf
+
+        
