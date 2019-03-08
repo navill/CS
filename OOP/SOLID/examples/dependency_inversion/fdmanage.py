@@ -33,23 +33,17 @@ class FileFDReader(FDReader):
         return self.f.readline()
 
 class SocketFDReader(FDReader):
-    def __init__(self, addr):
-        self.sock=socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
-        self.sock.connect_ex(addr)
-        self.buf=''
+	def __init__(self, addr):
+		self.sock=socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
+		self.sock.connect_ex(addr)
+		self.buf=''
+		self.sock.sendall('message starting'.encode())
 
-    def read(self):
-        print('start read')
-        buf=self.sock.recv(1024)
-        while buf:
-            print(buf, 'in while')
-            self.buf+=buf.decode()
-            buf=b''
-            buf=self.sock.recv(1024)
-        
-        print(buf, 'in read')
-        self.sock.sendall('done'.encode())
-        return self.buf
+	def read(self):
+		buf=self.sock.recv(1024)
+		self.buf=buf.decode()
+		self.sock.sendall('done'.encode())
+		return self.buf
 
 class STDFDReader(FDReader):
     def read(self):
