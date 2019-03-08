@@ -1,0 +1,3 @@
+new_file[I am your father!]
+new_file[What is your name?]
+new_file[Object-Oriented programming is FUN!]

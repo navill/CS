@@ -1,0 +1,4 @@
+new_file[name[Greg]]
+new_file[name[John]]
+new_file[name[Mark]]
+new_file[name[James]]

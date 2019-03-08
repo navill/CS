@@ -1,0 +1,7 @@
+new_file[num[1]]
+new_file[num[2]]
+new_file[num[3]]
+new_file[num[4]]
+new_file[num[5]]
+new_file[num[6]]
+new_file[num[7]]
