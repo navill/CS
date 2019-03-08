@@ -34,7 +34,7 @@ class DataHandler:
 ---
 ## Liskov substitution principle
   - objects of subtype S can be replaced with objects type P
-  - if f(x) is ok when objects x of type P then f(y) must be ok when objects y of type S  
+  - if f(x) is ok when objects x of type P then f(y) must be ok when objects y of subtype S  
 ---
 ---
 ## Interface segregation principle
