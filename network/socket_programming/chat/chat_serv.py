@@ -14,20 +14,24 @@ def serv_accept(sock):
     data_sock.setblocking(False)
     sel.register(data_sock, selectors.EVENT_READ, read)
 
+
+def on_client_out(data_sock, received):
+	if received.decode().split('$$')[1]=='0':
+		print('connection from {}:{} closing'.format(
+			clnt_addr_list[data_sock_list.index(data_sock)][0],
+			clnt_addr_list[data_sock_list.index(data_sock)][1]))
+		clnt_addr_list.pop(data_sock_list.index(data_sock))
+		data_sock_list.remove(data_sock)
+		sel.unregister(data_sock)
+		data_sock.close()
+
 def read(data_sock, mask):
-    if mask & selectors.EVENT_READ:
-        received=data_sock.recv(1024)
-        if received:
-            if received.decode().split('$$')[1]=='0':
-                print('connection from {}:{} closing'.format(
-					clnt_addr_list[data_sock_list.index(data_sock)][0],
-                    clnt_addr_list[data_sock_list.index(data_sock)][1]))
-                clnt_addr_list.pop(data_sock_list.index(data_sock))
-                data_sock_list.remove(data_sock)
-                sel.unregister(data_sock)
-                data_sock.close()
-            for sock in data_sock_list:
-                sock.sendall(received)
+	if mask & selectors.EVENT_READ:
+		received=data_sock.recv(1024)
+		if received:
+			on_client_out(data_sock, received)
+			for sock in data_sock_list:
+				sock.sendall(received)
 
 if len(sys.argv) < 3:
     print('usage : <host> <port>')

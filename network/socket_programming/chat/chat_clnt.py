@@ -2,11 +2,17 @@ import socket
 import threading
 import sys
 
+
+# handle stdin
+def get_sendmsg(msg):
+	send_msg=sys.argv[3]+ "$$" + msg
+	buffer=send_msg.encode()
+	return buffer
+
 def input_handler(sock):
     while True:
         msg = input()
-        send_msg=sys.argv[3]+ "$$" + msg
-        buffer=send_msg.encode()
+        buffer=get_sendmsg(msg)
         sent=sock.send(buffer)
         while sent < len(buffer):
             buffer=buffer[sent:]
@@ -14,23 +20,26 @@ def input_handler(sock):
         if msg=='0':
             break
 
-def output_handler(sock):
-    while True:     
-        buffer=sock.recv(1024)
-        if not buffer:
-            break
-        msg=buffer.decode()
+def process_recvmsg(buffer):
+	msg=buffer.decode()
         
-        if msg.startswith('$$ENTER$$'):
-            if msg[9:] != sys.argv[3]:
-                print("{} enter the chat room!".format(msg[9:]))
-            continue
-        name, msg=msg.split('$$')
-        if name != sys.argv[3]:
-            if msg=='0':
-                print("{} left the chat room!!".format(name))
-            else:
-                print('[{}] : {}'.format(name, msg))
+	if msg.startswith('$$ENTER$$'):
+		if msg[9:] != sys.argv[3]:
+			print("{} enter the chat room!".format(msg[9:]))
+		return 
+	name, msg=msg.split('$$')
+	if name != sys.argv[3]:
+		if msg=='0':
+			print("{} left the chat room!!".format(name))
+		else:
+			print('[{}] : {}'.format(name, msg))
+
+def output_handler(sock):
+	while True:     
+		buffer=sock.recv(1024)
+		if not buffer:
+			break
+		process_recvmsg(buffer)
 
 if len(sys.argv) < 4:
     print('usage : <host> <port> <name>')
