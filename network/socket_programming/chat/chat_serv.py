@@ -10,7 +10,7 @@ def serv_accept(sock):
     data_sock, clnt_addr=sock.accept()
     data_sock_list.append(data_sock)
     clnt_addr_list.append(clnt_addr)
-    print('connection from {}'.format(clnt_addr[1]))
+    print('connection from {}:{}'.format(clnt_addr[0], clnt_addr[1]))
     data_sock.setblocking(False)
     sel.register(data_sock, selectors.EVENT_READ, read)
 
@@ -19,7 +19,8 @@ def read(data_sock, mask):
         received=data_sock.recv(1024)
         if received:
             if received.decode().split('$$')[1]=='0':
-                print('connection from {} closing'.format(
+                print('connection from {}:{} closing'.format(
+					clnt_addr_list[data_sock_list.index(data_sock)][0],
                     clnt_addr_list[data_sock_list.index(data_sock)][1]))
                 clnt_addr_list.pop(data_sock_list.index(data_sock))
                 data_sock_list.remove(data_sock)
