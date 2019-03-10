@@ -15,15 +15,25 @@ def serv_accept(sock):
     sel.register(data_sock, selectors.EVENT_READ, read)
 
 
+def data_sock_close(data_sock):
+		clnt_addr_list.pop(data_sock_list.index(data_sock))
+		data_sock_list.remove(data_sock)
+		sel.unregister(data_sock)
+		data_sock.close()
+
+
 def on_client_out(data_sock, received):
 	if received.decode().split('$$')[1]=='0':
 		print('connection from {}:{} closing'.format(
 			clnt_addr_list[data_sock_list.index(data_sock)][0],
 			clnt_addr_list[data_sock_list.index(data_sock)][1]))
-		clnt_addr_list.pop(data_sock_list.index(data_sock))
-		data_sock_list.remove(data_sock)
-		sel.unregister(data_sock)
-		data_sock.close()
+		data_sock_close(data_sock)
+
+def on_clnt_conn_cut(data_sock):
+	print('ERROR[connection from {}:{} cut without notice]'.format(
+		clnt_addr_list[data_sock_list.index(data_sock)][0],
+		clnt_addr_list[data_sock_list.index(data_sock)][1]))  
+	data_sock_close(data_sock)	
 
 def read(data_sock, mask):
 	if mask & selectors.EVENT_READ:
@@ -32,6 +42,8 @@ def read(data_sock, mask):
 			on_client_out(data_sock, received)
 			for sock in data_sock_list:
 				sock.sendall(received)
+		else:
+			on_clnt_conn_cut(data_sock)
 
 if len(sys.argv) < 3:
     print('usage : <host> <port>')
