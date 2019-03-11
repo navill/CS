@@ -1,23 +1,32 @@
 from abc import ABCMeta, abstractmethod
-from locator import Locator
 import socket
 
 class FDManager:
-    def __init__(self, filename):
+	reader=None
+# dependency injection using constructor
+	"""
+	def __init__(self, filename, reader):
         self.f=open(filename, 'wt')
-        self.reader=Locator.get_instance().get_reader()
+        FDManager.reader=reader 
         self.buf=''
+	"""
+	def __init__(self, filename):
+		self.f=open(filename, 'wt')
+		self.buf=''
 
-    def read(self):
-        self.buf=self.reader.read()
-        return len(self.buf)
+	def set_reader(self, reader):
+		FDManager.reader=reader
+	
+	def read(self):
+		self.buf=self.reader.read()
+		return len(self.buf)
 
-    def write(self):
-        if self.buf:
-            self.f.write(self.buf)
+	def write(self):
+		if self.buf:
+			self.f.write(self.buf)
 
-    def close(self):
-        self.f.close()
+	def close(self):
+		self.f.close()
 
 #추상 클래스
 class FDReader(metaclass=ABCMeta):

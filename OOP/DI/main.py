@@ -1,27 +1,27 @@
-from fdmanage import  FDManager, FileFDReader, SocketFDReader, STDFDReader, Locator
-from locator import SingletonError
+from fdmanage import  FDManager, FileFDReader, SocketFDReader, STDFDReader
 
 
 #fr=FileFDReader('filecontent.txt')
 #fr=SocketFDReader(('localhost', 62525))
 fr=STDFDReader()
 
-locator=Locator(fr)
 
-locator.init()
 
-# if a Locator dobject is created again, it would raise a singletonerror
-"""
-try:
-	locator2=Locator(fr)
-except SingletonError as exc:
-	print(exc)
-	exit()
-"""
+# dependency injection using constructor
+
+#fm=FDManager('new_content_filereader.txt', fr)
+#fm=FDManager('new_content_socketreader.txt', fr)
+#fm=FDManager('new_content_stdreader.txt', fr)
+
+
+
+# dependency injection using method
 
 #fm=FDManager('new_content_filereader.txt')
 #fm=FDManager('new_content_socketreader.txt')
 fm=FDManager('new_content_stdreader.txt')
+
+fm.set_reader(fr)
 
 while True:
     num_read=fm.read()
