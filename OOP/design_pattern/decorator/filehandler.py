@@ -5,11 +5,12 @@ import os
 import zipfile
 import sys
 from Crypto.Cipher import AES
+import re
 
-# add functionality to the method that I make.
+# ADD FUNCTIONALITY to the method that I make.
 
 
-# abstract class for inteface
+# ABSTRACT CLASS FOR INTEFACE
 class FileCopier(metaclass=ABCMeta):
 	@abstractmethod
 	def copy(self, src, dst):
@@ -17,17 +18,18 @@ class FileCopier(metaclass=ABCMeta):
 
 
 
-# implementation
+# IMPLEMENTATION
 class RealFileCopier(FileCopier):
 	def copy(self, src, dst):
-		if os.path.exists(src) and os.path.exists(os.path.split(dst)[0]): 
-			copyfile(src, dst)	
+		if os.path.exists(src) and (os.path.exists(os.path.split(dst)[0]) or not re.search('/', dst)): 
+			if src != dst:
+				copyfile(src, dst)	
 		else:
 			raise Exception("There is no path!")
 
 
 
-#decorator
+# DECORATOR
 class FileDecorator(FileCopier):
 	def __init__(self, delegate):
 		self.delegate=delegate
@@ -37,7 +39,7 @@ class FileDecorator(FileCopier):
 
 
 
-# inherit from decorator
+# INHERIT FROM DECORATOR
 class ZipFileCopier(FileDecorator):
 	def __init__(self, delegate):
 		super().__init__(delegate)
@@ -45,10 +47,10 @@ class ZipFileCopier(FileDecorator):
 	def zip_file(self, src, dst):
 		try:	
 			if os.path.exists(src):
-				dst=os.path.split(dst)[1]
-				with zipfile.ZipFile(dst, 'w') as myzip:
+				new_src=os.path.split(dst)[1]
+				with zipfile.ZipFile(new_src, 'w') as myzip:
 					myzip.write(src)
-				return dst
+				return new_src
 		except:
 			raise Exception("There is no file!")
 
@@ -57,9 +59,10 @@ class ZipFileCopier(FileDecorator):
 		new_src=self.zip_file(src, dst)
 		# delegate copy	
 		self.real_copy(new_src, dst)
-		os.remove(new_src)		
+		if re.search('/', dst):
+			os.remove(new_src)		
 
-class EncryptCopier(FileDecorator):
+class EncryptFileCopier(FileDecorator):
 	def __init__(slf, delegate):
 		super().__init__(delegate)
 
@@ -82,7 +85,8 @@ class EncryptCopier(FileDecorator):
 		ciphertext, lack_bytes=self.encrypt(content)
 
 		# write to the new_src file	
-		new_src='new_'+os.path.split(src)[1]	
+		# if dst='/dir/encrypted.dat' then new_src='encrypted.dat'
+		new_src=os.path.split(dst)[1]
 		new_file=open(new_src, 'wb')
 		new_file.write(lack_bytes.to_bytes(1, 'little', signed=False))
 		new_file.write('\n'.encode())
@@ -96,16 +100,18 @@ class EncryptCopier(FileDecorator):
 		new_src=self.encrypt_file(src, dst)	
 		# delegate copy
 		self.real_copy(new_src, dst)
-		os.remove(new_src)
+		if re.search('/', dst):
+			os.remove(new_src)
 
 if __name__=="__main__":
 	rfc=RealFileCopier()
-#	zfc=ZipFileCopier(rfc)
-#	zfc.copy(sys.argv[1], sys.argv[2])
-	
-	efc=EncryptCopier(rfc)
-	efc.copy(sys.argv[1], sys.argv[2])
 
+	zfc=ZipFileCopier(rfc)
+	zfc.copy(sys.argv[1], sys.argv[2])
+	
+#	efc=EncryptFileCopier(rfc)
+#	efc.copy(sys.argv[1], sys.argv[2])
+	
 	
 
 	
