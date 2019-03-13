@@ -98,6 +98,63 @@ $ sudo mount -t vfat /dev/sdc1 /mnt
 $ sudo umount /mnt
 ```
 ---
+# add disk
+  - IDE : the oldest
+  - SATA 
+  - SCSI : for server, high-speed
+---
+# steps for addition
+  1. add a pysical disk 
+  2. make a new partition
+  3. create a file system : format
+  4. mount
+---
+# device name
+  - /dev/sda : first disk
+  - /dev/sdb : second disk
+  - /dev/sdc : third disk
+  - ...
+---
+# partition
+  - /dev/sda : the first disk
+  - /dev/sda1: the first partition of the first disk
+  - /dev/sda2: the second partition of the first disk
+  - /dev/sda3: the third partition of the first disk
+---
+# fdisk
+```
+# print partition table
+$ sudo fdisk -l
+# sudo fdisk /dev/sda
+```
+---
+# mke2fs
+```
+$ mke2fs -t ext4 /dev/sdc1
+```
+---
+# mount
+```
+$ sudo mount /dev/sdb1 /mnt/sdd1
+```
+---
+# disk management
+```
+# human-readable
+$ df -h
+# print-type
+$ df -T
+# type
+$ df -t ext4
+```
+---
+# disk management
+```
+# disk usage for the current directory
+$ du -h 
+```
+---
+
 
 
 
