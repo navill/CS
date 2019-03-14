@@ -23,3 +23,26 @@ $ dmesg | more
   - 3, 4, 5 : the same as 2
   - 6 : system restart
 ---
+# /etc/rc*.d
+```
+$ runlevel
+$ ls -l /etc/rc2.d
+```
+---
+# shutdown
+```
+$ sudo shutdown -h now
+$ sudo shutdown -h +2
+$ sudo shutdown -r +3
+$ sudo shutdown -c
+```
+---
+# single user mode
+```
+ro quiet splash $vt_handoff ->
+rw init=/bin/bash
+
+#all done
+reboot -f
+```
+
