@@ -134,4 +134,12 @@ $ who
 $ groups
 $ groups john
 ```
+---
+# chown
+```
+# change owner
+$ sudo chown john test
+$ sudo chown james -R test
+```
+
 
