@@ -28,12 +28,12 @@ Flag: U-UP
 
 ```
 ---
-# rounte add network
+# route add network
 ```
 route add -net 192.168.1.0 netmask 255.255.255.0 dev eth0
 ```
 ---
-# route add del network
+# route del network
 ```
 route del -net 192.168.1.0 netmask 255.255.255.0
 ```
