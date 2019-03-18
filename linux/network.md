@@ -147,12 +147,12 @@ $ tcpdump -r dfile
 ---
 # tcpdump
 ```
-$ tcpdump host 192.168.0.12
+$ tcpdump host <ip>
 ```
 ---
 # tcpdump
 ```
-$ tcpdump tcp port 23
+$ tcpdump tcp port <port>
 ```
 ---
 # tcpdump
