@@ -118,45 +118,46 @@ $ arp 192.168.0.1
 ---
 # tcpdump
 ```
+# all packets without filtering
 $ tcpdump
 ```
 ---
 # tcpdump
 ```
 # close after num of packets
-$ tcpdump -c <num>
+$ tcpdump -c 3
 ```
 ---
 # tcpdump
 ```
 # select interface
-$ tcpdump -i <iface>
+$ tcpdump -i wlp3s0
 ```
 ---
 # tcpdump
 ```
 # write
-$ tcpdump -w dfile
+$ tcpdump -w dump.out
 ```
 ---
 # tcpdump
 ```
 # read
-$ tcpdump -r dfile
+$ tcpdump -r dump.out
 ```
 ---
 # tcpdump
 ```
-$ tcpdump host <ip>
+$ tcpdump host 192.168.0.2
 ```
 ---
 # tcpdump
 ```
-$ tcpdump tcp port <port>
+$ tcpdump tcp port 443
 ```
 ---
 # tcpdump
 ```
-$ tcpdump -Xqr dfile
+$ tcpdump -Xqr dump.out
 ```
 
