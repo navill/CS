@@ -51,7 +51,7 @@ if len(sys.argv) < 3:
 
 serv_sock=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 serv_sock.bind((sys.argv[1], int(sys.argv[2])))
-serv_sock.listen()
+serv_sock.listen(32)
 serv_sock.setblocking(False)
 sel.register(serv_sock, selectors.EVENT_READ, serv_accept)
 
