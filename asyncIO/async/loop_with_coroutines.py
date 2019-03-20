@@ -80,7 +80,7 @@ class Fetcher:
 		selector.unregister(ss.fileno())
 		print('connected')
 
-		request='GET {} HTTP/1.1\r\nHost: xkcd.com\r\nConnection: close\r\n\r\n'.format(url)
+		request='GET {} HTTP/1.1\r\nHost: xkcd.com\r\n\r\n'.format(url)
 		ss.sendall(request.encode())
 		
 		response=yield from read_all(ss)
