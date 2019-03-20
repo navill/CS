@@ -13,12 +13,13 @@
 #            manual                 EVENT-DRIVEN 
 #                         serial     cooperative     preemptive
 
-
 import socket
-import ssl
+from bs4 import BeautifulSoup
 from selectors import DefaultSelector, EVENT_WRITE, EVENT_READ
+import sys
 
 selector=DefaultSelector()
+host=sys.argv[1]
 
 class Future:
 	def __init__(self):
@@ -37,24 +38,23 @@ class Future:
 		yield self
 		return self.result
 
-def read(ss):
+def read(sock):
 	f=Future()
 
 	def on_readable():
-		f.set_result(ss.recv(4096))
+		f.set_result(sock.recv(4096))
 
-	selector.register(ss.fileno(), EVENT_READ, on_readable)
+	selector.register(sock.fileno(), EVENT_READ, on_readable)
 	chunk=yield from f
-	selector.unregister(ss.fileno())
+	selector.unregister(sock.fileno())
 	return chunk
 
-def read_all(ss):
+def read_all(sock):
 	response=[]
-	chunk=yield from read(ss)
+	chunk=yield from read(sock)
 	while chunk:
 		response.append(chunk)
-		chunk=yield from read(ss)
-	
+		chunk=yield from read(sock)
 	return b''.join(response)
 
 class Fetcher:
@@ -62,9 +62,8 @@ class Fetcher:
 		response=b''
 		sock=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		sock.setblocking(False)
-		ss=ssl.wrap_socket(sock, ssl_version=ssl.PROTOCOL_TLS)
 		try:
-			ss.connect(('xkcd.com', 443))
+			sock.connect((host, 80))
 		except BlockingIOError:
 			pass
 
@@ -73,34 +72,39 @@ class Fetcher:
 		def on_connected():
 			f.set_result(None)
 
-		selector.register(ss.fileno(), EVENT_WRITE, on_connected)
+		selector.register(sock.fileno(), EVENT_WRITE, on_connected)
 
 		yield from  f
 
-		selector.unregister(ss.fileno())
+		selector.unregister(sock.fileno())
 		print('connected')
 
-		request='GET {} HTTP/1.1\r\nHost: xkcd.com\r\n\r\n'.format(url)
-		ss.sendall(request.encode())
+		request='GET {} HTTP/1.1\r\nHost: {}\r\nConnection: close\r\n\r\n'.format(url, host)
+		sock.sendall(request.encode())
 		
-		response=yield from read_all(ss)
+		response=yield from read_all(sock)
 		"""	
 		while True:
 			f=Future()
 
 			def on_readable():
-				f.set_result(ss.recv(4096))
+				f.set_result(sock.recv(4096))
 
-			selector.register(ss.fileno(), EVENT_READ, on_readable)
+			selector.register(sock.fileno(), EVENT_READ, on_readable)
 
 			chunk=yield f
-			selector.unregister(ss.fileno())
+			selector.unregister(sock.fileno())
 			if chunk:
 				response+=chunk
 			else:
 				break
 		"""
-		print(response)
+		self.print_html(response)
+		return 'done'
+
+	def print_html(self, response):
+		soup=BeautifulSoup(response, 'html.parser')
+		print(soup.prettify())
 
 class Task:
 	def __init__(self, coro):
@@ -112,20 +116,31 @@ class Task:
 	def step(self, future):
 		try:
 			next_future=self.coro.send(future.result)
-		except StopIteration:
-			return
+		except StopIteration as exc:
+			print(f'the last result : {exc}')
+			raise StopError
 
 		next_future.add_done_callback(self.step)
 
-def loop():
+def run_forever():
 	while True:
 		events=selector.select()
 		for key, mask in events:
 			callback=key.data
 			callback()
 
-fetcher=Fetcher()
-Task(fetcher.fetch('/'))
+def run_until_complete(coro):
+	task=Task(coro)
+	try:
+		run_forever()
+	except StopError:
+		print("coroutine completed!")
+		pass
 
-loop()
+class StopError(BaseException):
+	pass
+
+fetcher=Fetcher()
+
+run_until_complete(fetcher.fetch('/'))
 
