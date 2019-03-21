@@ -35,18 +35,22 @@ def show(self):
 Account=init, deposit, withdraw, transfer, show
 
 if __name__=="__main__":
+	# 객체 생성
 	my_acnt=Account[0]('greg', 5000)
 	your_acnt=Account[0]('john', 2000)
 	my_acnt['show'](my_acnt)
 	your_acnt['show'](your_acnt)
 
+	# 입금
 	my_acnt['deposit'](my_acnt, 3000)
 	my_acnt['show'](my_acnt)
-
+	
+	# 출금
 	my_acnt['witdraw'](my_acnt, 2000)
 	my_acnt['show'](my_acnt)
 
-	my_acnt['transfer'](my_acnt, your_acnt, 1000)
+	# 송금
+	my_acnt['transfer'](my_acnt, your_acnt, 5000)
 	my_acnt['show'](my_acnt)
 	your_acnt['show'](your_acnt)
 
