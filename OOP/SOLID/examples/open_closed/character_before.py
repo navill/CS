@@ -57,7 +57,6 @@ class Monster(Character):
         super().__init__(name, hp, power)
         self.name=self.get_monster_kind()+name
         self.attack_kind=self.get_monster_kind()
-        print(self.attack_kind)
 
     def attack(self, other, a_kind):
         if a_kind==self.attack_kind:
