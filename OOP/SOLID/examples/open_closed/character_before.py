@@ -1,12 +1,11 @@
-# 추상화 타입을 사용해 프로그래밍
-# CLOSED FOR MODIFICATION
-# 공격 종류를 확장해도 캐릭터의 공격 코드는 변하지 않는다.
+# 확장할 때 마다 Character 클래스와
+# Monster 클래스의 코드가 변한다.
 
 from abc import ABCMeta, abstractmethod
-from attack_kind import (AttackKindFactory, FireAttackKind, IceAttackKind,
-                        StoneAttackKind, KungfuAttackKind)
+from attack_before import Attacks
 
 class Character(metaclass=ABCMeta):
+    attacks=Attacks()
     def __init__(self, name, hp, power):
         self.name=name
         self.hp=hp
@@ -24,26 +23,30 @@ class Character(metaclass=ABCMeta):
         return f'{self.name} : {self.hp}'
 
 class Player(Character):
-    def __init__(self, name='player', hp=100, power=10, *attack_kinds):
+    def __init__(self, name='player', hp=100, power=10, *a_kinds):
         super().__init__(name, hp, power)
 
         self.skills=[]
-        for attack_kind in attack_kinds:
+        for attack_kind in a_kinds:
             self.skills.append(attack_kind)
 
     def attack(self, other, a_kind):
-        for attack_kind in self.skills:
-            if a_kind==attack_kind.get_kind():
-                other.get_damage(self.power, a_kind)
-                attack_kind.attack()
+        if a_kind in self.skills:
+            other.get_damage(self.power, a_kind)
+            if a_kind=='Fire':
+                self.attacks.fire_attack()
+            elif a_kind=='Ice':
+                self.attacks.ice_attack()
+            elif a_kind=='Stone':
+                self.attacks.stone_attack()
+            elif a_kind=='Kungfu':
+                self.attacks.kungfu_attack()
 
     def get_damage(self, power, a_kind):
-        for attack_kind in self.skills:
-            if attack_kind.get_kind()==a_kind:
-                self.hp-=(power//2)
-                return
-        
-        self.hp-=power
+        if a_kind in self.skills:
+            self.hp-=(power//2)
+        else:
+            self.hp-=power
 
 class Monster(Character):
     @classmethod
@@ -53,21 +56,29 @@ class Monster(Character):
     def __init__(self, name='Monster', hp=50, power=5):
         super().__init__(name, hp, power)
         self.name=self.get_monster_kind()+name
-        self.attack_kind=AttackKindFactory(self.get_monster_kind())
+        self.attack_kind=self.get_monster_kind()
+        print(self.attack_kind)
 
     def attack(self, other, a_kind):
-        if self.attack_kind.get_kind()==a_kind:
+        if a_kind==self.attack_kind:
             other.get_damage(self.power, a_kind)
-            self.attack_kind.attack()
+            if a_kind=='Fire':
+                self.attacks.fire_attack()
+            elif a_kind=='Ice':
+                self.attacks.ice_attack()
+            elif a_kind=='Stone':
+                self.attacks.stone_attack()
+            elif a_kind=='Kungfu':
+                self.attacks.kungfu_attack()
 
     def get_damage(self, power, a_kind):
-        if a_kind==self.attack_kind.get_kind():
+        if a_kind==self.attack_kind:
             self.hp+=power
         else:
             self.hp-=power
 
     def get_attack_kind(self):
-        return self.attack_kind.get_kind()
+        return self.attack_kind
 
     @abstractmethod
     def generate_gold(self):
@@ -104,8 +115,7 @@ if __name__=="__main__":
     monsters=[]
     monsters.extend((fm, im, sm, kfm))
 
-    player=Player('john', 120, 20, IceAttackKind(), FireAttackKind())
-    print(player)
+    player=Player('john', 120, 20,'Fire', 'Ice')
 
     for mon in monsters:
         player.attack(mon, 'Fire')
