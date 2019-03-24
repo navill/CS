@@ -3,7 +3,8 @@
 # 공격 종류를 확장해도 캐릭터의 공격 코드는 변하지 않는다.
 
 from abc import ABCMeta, abstractmethod
-from attack_kind import AttackKindFactory, FireAttackKind, IceAttackKind
+from attack_kind import (AttackKindFactory, FireAttackKind, IceAttackKind,
+                         StoneAttackKind, KungfuAttackKind)
 
 class Character(metaclass=ABCMeta):
     def __init__(self, name, hp, power):
@@ -65,7 +66,7 @@ class Monster(Character):
             self.hp-=power
 
     def get_attack_kind(self):
-        return self.attack_kind
+        return self.attack_kind.get_kind()
 
     @abstractmethod
     def generate_gold(self):
@@ -109,3 +110,8 @@ if __name__=="__main__":
 
     for mon in monsters:
         print(mon)
+
+    for mon in monsters:
+        mon.attack(player, mon.get_attack_kind())
+
+    print(player)
