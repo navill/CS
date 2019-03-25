@@ -95,5 +95,6 @@ VALUES
 ---
 # mysqldump
 ```
-$ mysqldump -u root -p mydb > mydb_backup.sql
+$ mysqldump -u root -p --databases 
+mydb > mydb_backup.sql
 ```
