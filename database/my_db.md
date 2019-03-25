@@ -1,8 +1,8 @@
 # mydb
 ---
-# create table
+# create database
 ```sql
-sql> CREATE TABLE mydb DEFAULT CHARACTER SET utf8mb4;
+sql> CREATE DATABASE mydb DEFAULT CHARACTER SET utf8mb4;
 ```
 ---
 # create table classes
@@ -98,3 +98,11 @@ VALUES
 $ mysqldump -u root -p --databases 
 mydb > mydb_backup.sql
 ```
+---
+# mysqldump
+```sql
+$ mysql -u root -p
+mysql> source mydb_backup.sql 
+```
+
+
