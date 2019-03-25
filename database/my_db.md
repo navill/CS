@@ -92,4 +92,8 @@ VALUES
 ('park', 'literature', 2),
 ('lee', 'science', 3);
 ```
-
+---
+# mysqldump
+```
+$ mysqldump -u root -p 1234 mydb > mydb_backup.sql
+```
