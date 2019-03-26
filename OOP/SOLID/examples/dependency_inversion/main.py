@@ -1,5 +1,5 @@
-from fdmanage import  FDManager, FileFDReader, SocketFDReader, STDFDReader, Locator
-from locator import SingletonError
+from fdmanage import  FDManager, FileFDReader, SocketFDReader, STDFDReader
+from locator import Locator, SingletonError
 
 
 #fr=FileFDReader('filecontent.txt')

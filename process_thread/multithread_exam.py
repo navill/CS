@@ -1,14 +1,14 @@
 import threading
 
 def thread_main(li, n):
-	for i in range(offset * n + 1, offset *(n + 1) + 1):
+	for i in range(offset * n, offset *(n + 1)):
 		li[i] *= 2
 
 n = 1000 
 
 offset = n // 4
 
-li = [i for i in range(n+1)]
+li = [i+1 for i in range(n)]
 threads = []
 
 for i in range(4):
