@@ -1,5 +1,4 @@
 import random
-import time
 
 def bubble_sort(li):
     n=len(li)
@@ -13,9 +12,7 @@ if __name__=="__main__":
         num_data=int(input('데이터 개수(종료:0):'))
         if not num_data:
             break
-        data=[random.randint(1, 1000) for _ in range(num_data)]
-        start=time.time()
+        data=[random.randint(1, 100) for _ in range(num_data)]
+        print(data)
         bubble_sort(data)
-        elapsed=time.time()-start
-        print('elapsed time : {} sec.'.format(elapsed))
-        #print(data)
+        print(data)
