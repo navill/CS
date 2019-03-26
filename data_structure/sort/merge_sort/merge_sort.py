@@ -1,41 +1,31 @@
 import random
 
-def merge_sort_recursion(li, merged, start, end):
-    if start >= end:
-        return
-
-    mid=(start+end)//2
-    merge_sort_recursion(li, merged, start, mid)
-    merge_sort_recursion(li, merged, mid+1, end)
-
-    left_idx=start; right_idx=mid+1; temp_idx=start
+def merge(li,start,mid,end):
+    merged=[]
+    left_idx=start;right_idx=mid+1
     while left_idx<=mid and right_idx<=end:
         if li[left_idx]<li[right_idx]:
-            merged[temp_idx]=li[left_idx]
+            merged.append(li[left_idx])
             left_idx+=1
-            temp_idx+=1
         else:
-            merged[temp_idx]=li[right_idx]
+            merged.append(li[right_idx])
             right_idx+=1
-            temp_idx+=1
     while left_idx<=mid:
-        merged[temp_idx]=li[left_idx]
+        merged.append(li[left_idx])
         left_idx+=1
-        temp_idx+=1
     while right_idx<=end:
-        merged[temp_idx]=li[right_idx]
+        merged.append(li[right_idx])
         right_idx+=1
-        temp_idx+=1
-    for i in range(start, end+1):
-        li[i]=merged[i]
+    li[start:end+1]=merged
 
-
-def merge_sort(li):
-    n=len(li)
-    merged=[None for _ in range(n)]
-    start=0
-    end=n-1
-    merge_sort_recursion(li, merged, start, end)
+def merge_sort(li, start, end):
+    if start>=end:
+        return
+    mid=(start+end)//2
+    merge_sort(li,start,mid)
+    merge_sort(li,mid+1,end)
+    
+    merge(li,start,mid,end)
 
 if __name__=="__main__":
     while True:
@@ -44,5 +34,5 @@ if __name__=="__main__":
             break
         data=[random.randint(1, 100) for _ in range(num_data)]
         print(data)
-        merge_sort(data)
+        merge_sort(data, 0, len(data)-1)
         print(data)
