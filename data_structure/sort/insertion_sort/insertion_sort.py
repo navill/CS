@@ -5,12 +5,14 @@ def insertion_sort(li):
     temp=None
     for i in range(1, n):
         temp=li[i]
-        for j in range(i-1, -1, -1):
+        for j in range(i-1, -2, -1):
+            if j==-1:
+                break
             if li[j] > temp:
                 li[j+1]=li[j]
             else:
                 break
-        li[0 if j==0 else j+1]=temp
+        li[j+1]=temp
 
 if __name__=="__main__":
     while True:
