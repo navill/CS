@@ -84,5 +84,9 @@ BETWEEN '2002-5-1' AND '2002-9-10');
 sql> DROP TABLE student_cp;
 ```
 ---
-#  
+# UPDATE SET
+```sql
+sql> UPDATE students SET score=99 WHERE name like 'Mary';
+```
+
 
