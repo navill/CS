@@ -16,24 +16,24 @@ num_students INT NOT NULL
 # create table students
 ```sql
 sql> CREATE TABLE students (
-    -> studentID INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    -> name VARCHAR(20) NOT NULL,
-    -> height SMALLINT NOT NULL,
-    -> score SMALLINT,
-    -> birthday DATE NOT NULL,
-    -> classID INT NOT NULL,
-    -> FOREIGN KEY (classID) REFERENCES classes (classID)
-    -> );
+studentID INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+name VARCHAR(20) NOT NULL,
+height SMALLINT NOT NULL,
+score SMALLINT,
+birthday DATE NOT NULL,
+classID INT NOT NULL,
+FOREIGN KEY (classID) REFERENCES classes (classID)
+);
 ```
 ---
 # create table teachers
 ```sql
 sql>CREATE TABLE teachers (
-    -> teacherID INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    -> subject VARCHAR(30) UNIQUE,
-    -> classID INT NOT NULL,
-    -> FOREIGN KEY (classID) REFERENCES classes (classID)
-    -> );
+teacherID INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+subject VARCHAR(30) UNIQUE,
+classID INT NOT NULL,
+FOREIGN KEY (classID) REFERENCES classes (classID)
+);
 ```
 ---
 # insert into classes
@@ -104,5 +104,3 @@ mydb > mydb_backup.sql
 $ mysql -u root -p
 mysql> source mydb_backup.sql 
 ```
-
-

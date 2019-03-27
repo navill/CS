@@ -38,14 +38,14 @@ sql> CREATE USER 'greg'@'%' IDENTIFIED BY '1234';
 ---
 # grant all priv
 ```
-sql> GRANT ALL PRIVILEGES ON *.* TO 'greg'@'%'\
+sql> GRANT ALL PRIVILEGES ON *.* TO 'greg'@'%'
 WITH GRANT OPTION;
 sql> FLUSH PRIVILEGES;
 ```
 ---
 # if a user has all priv
 ```
-sql> SELECT USER, HOST, SUPER_PRIV FROM USER \
+sql> SELECT USER, HOST, SUPER_PRIV FROM USER
 WHERE USER LIKE 'greg';
 ```
 ---
