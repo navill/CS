@@ -13,7 +13,7 @@ async def fetcher():
 	r=urlsplit(url)
 	reader, writer=await asyncio.open_connection(r.hostname, 443, ssl=True)
 
-	writer.write('GET {} HTTP/1.0\r\nHost: xkcd.com\r\n\r\n'.format(r.path).encode())
+	writer.write('GET {} HTTP/1.1\r\nHost: xkcd.com\r\nConnection: close\r\n\r\n'.format(r.path).encode())
 	response=b''	
 
 	while True:

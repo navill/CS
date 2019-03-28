@@ -35,7 +35,7 @@ class Crawler:
 			reader, writer=await asyncio.open_connection(r.hostname, 443, ssl=True)
 		else:
 			reader, writer=await asyncio.open_connection(r.hostname, 80)
-		writer.write('GET {} HTTP/1.0\r\nHost: {}\r\n\r\n'.format(r.path, r.hostname).encode())
+		writer.write('GET {} HTTP/1.1\r\nHost: {}\r\nConnection: close\r\n\r\n'.format(r.path, r.hostname).encode())
 
 		response=b''
 
