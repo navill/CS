@@ -124,6 +124,42 @@ ON SS.subject_name=SB.sub_name
 ORDER BY SB.sub_name;
 ```
 ---
+# CREATE VIEW
+```sql
+sql> CREATE VIEW view_st_sb_join 
+AS 
+SELECT ST.name, ST.score, SS.subject_name,
+SB.sub_name, SB.room_num  
+FROM students ST INNER JOIN student_subject SS 
+ON ST.name=SS.student_name 
+INNER JOIN subjects SB 
+ON SS.subject_name=SB.sub_name 
+ORDER BY ST.name;
+```
+---
+# VIEW
+```sql
+sql> SELECT * FROM view_st_sb_join;
 
-
+sql> SELECT * FROM view_st_sb_join 
+WHERE score BETWEEN 50 AND 70;
+```
+---
+# UPDATE
+```sql
+sql> UPDATE view_st_sb_join 
+SET score=70 
+WHERE name like 'Kelly';
+```
+---
+# DROP VIEW
+```sql
+sql> DROP VIEW view_st_sb_join; 
+```
+---
+# CREATE INDEX
+```sql
+sql> 
+```
+---
 
