@@ -68,7 +68,7 @@ CREATE TABLE `student_subject` (
 
 LOCK TABLES `student_subject` WRITE;
 /*!40000 ALTER TABLE `student_subject` DISABLE KEYS */;
-INSERT INTO `student_subject` VALUES (1,'Greg','english'),(2,'Greg','ethics'),(3,'John','english'),(4,'John','literature'),(5,'Mark','english'),(6,'Mark','literature'),(7,'Mark','math'),(8,'James','science'),(9,'Johanna','english'),(10,'Johanna','math'),(11,'Kelly','ethics'),(12,'Sam','english'),(13,'Daniel','math'),(14,'Daniel','science'),(15,'Daniel','ethics'),(16,'Ann','math'),(17,'Kreizig','math'),(18,'Elizabeth','literature'),(19,'Elizabeth','ethics'),(20,'Emilly','science'),(21,'Emilly','english'),(22,'Lily','math');
+INSERT INTO `student_subject` VALUES (1,'Greg','english'),(2,'Greg','ethics'),(3,'John','english'),(4,'John','literature'),(5,'Mark','english'),(6,'Mark','literature'),(7,'Mark','math'),(8,'James','science'),(9,'Johanna','english'),(10,'Johanna','math'),(11,'Kelly','ethics'),(12,'Sam','english'),(13,'Daniel','math'),(14,'Daniel','science'),(15,'Daniel','ethics'),(16,'Ann','math'),(17,'Kreizig','math'),(18,'Elizabeth','literature'),(19,'Elizabeth','ethics'),(20,'Emily','science'),(21,'Emily','english'),(22,'Lily','math');
 /*!40000 ALTER TABLE `student_subject` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -161,4 +161,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-28 22:53:03
+-- Dump completed on 2019-03-28 23:50:39

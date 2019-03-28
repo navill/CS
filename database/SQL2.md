@@ -69,7 +69,7 @@ sub_name VARCHAR(20) NOT NULL UNIQUE,
 room_num TINYINT NOT NULL); 
 ```
 ---
-M:N
+# M:N
 ``` sql
 sql> CREATE TABLE student_subject (
 regID SMALLINT AUTO_INCREMENT PRIMARY KEY,
@@ -105,7 +105,25 @@ VALUES ('Greg', 'english'),
 ---
 # M:N
 ```sql
-sql> 
+sql> SELECT ST.name, ST.score, SB.sub_name, SB.room_num
+FROM students ST INNER JOIN student_subject SS
+ON ST.name=SS.student_name
+INNER JOIN subjects SB
+ON SS.subject_name=SB.sub_name
+ORDER BY ST.name;
 ```
+---
+# M:N
+```sql
+sql> SELECT SB.sub_name, SB.room_num, 
+ST.name, ST.score 
+FROM students ST INNER JOIN student_subject SS 
+ON ST.name=SS.student_name 
+INNER JOIN subjects SB 
+ON SS.subject_name=SB.sub_name 
+ORDER BY SB.sub_name;
+```
+---
+
 
 
