@@ -61,4 +61,51 @@ sql> SELECT classID, MAX(score)
 FROM students
 GROUP BY classID;
 ```
+---
+# M:N
+```sql
+sql> CREATE TABLE subjects (
+sub_name VARCHAR(20) NOT NULL UNIQUE,
+room_num TINYINT NOT NULL); 
+```
+---
+M:N
+``` sql
+sql> CREATE TABLE student_subject (
+regID SMALLINT AUTO_INCREMENT PRIMARY KEY,
+student_name VARCHAR(20) NOT NULL,
+subject_name VARCHAR(20) NOT NULL);
+```
+---
+# M:N
+```sql
+sql> INSERT INTO subjects 
+(sub_name, room_num) 
+VALUES ('math', 101), ('literature', 105), 
+('science', 107), ('english', 110), ('ethics', 111);
+```
+---
+# M:N
+```sql
+sql> INSERT INTO student_subject 
+(student_name, subject_name)
+VALUES ('Greg', 'english'), 
+('Greg', 'ethics'), ('John', 'english'),
+('John', 'literature'), ('Mark', 'english'), 
+('Mark', 'literature'),('Mark', 'math'), 
+('James', 'science'), ('Johanna', 'english'),
+('Johanna', 'math'), ('Kelly', 'ethics'), 
+('Sam', 'english'), ('Daniel', 'math'), 
+('Daniel', 'science'),('Daniel', 'ethics'),
+('Ann', 'math'), ('Kreizig', 'math'), 
+('Elizabeth', 'literature'),('Elizabeth', 'ethics'), 
+('Emilly', 'science'), ('Emilly', 'english'),
+('Lily', 'math');
+```
+---
+# M:N
+```sql
+sql> 
+```
+
 
