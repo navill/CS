@@ -228,6 +228,23 @@ ADD CONSTRAINT pk_st_name
 PRIMARY KEY(name);
 ```
 ---
+# DROP INDEX
+```sql
+sql> DROP INDEX `PRIMARY` ON students;
+```
+---
+# ALTER TABLE
+```sql
+sql> ALTER TABLE students
+ADD CONSTRAINT
+PRIMARY KEY(studentID);
+```
+---
+# CREATE INDEX
+```sql
+sql> CREATE INDEX idx_st_name
+ON students (name);
+```
+---
 # 
-
 
