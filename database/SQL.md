@@ -26,7 +26,11 @@ sql> DESC students;
 ---
 # ALTER TABLE
 ```sql
-sql> ALTER TABLE students MODIFY COLUMN classID INT;
+sql> ALTER TABLE students 
+MODIFY COLUMN height SMALLINT NULL;
+
+sql> ALTER TABLE students
+MODIFY COLUMN score SMALLINT DEFAULT 0;
 ```
 ---
 # INSERT INTO
@@ -43,11 +47,6 @@ sql> INSERT INTO students
 (name, height, score, birthday, classID)
 VALUES ('Emily', 180, 60, '2002-9-18', NULL),
 ('Lily', 155, 100, '2002-9-18', NULL);
-```
----
-# ALTER TABLE
-```sql
-sql> ALTER TABLE teachers MODIFY COLUMN classID INT;
 ```
 ---
 # INSERT INTO
@@ -86,7 +85,8 @@ sql> DROP TABLE student_cp;
 ---
 # UPDATE SET
 ```sql
-sql> UPDATE students SET score=99 WHERE name like 'Mary';
+sql> UPDATE students SET score=99 
+WHERE name like 'Mary';
 ```
 
 

@@ -109,14 +109,19 @@ ADD CONSTRAINT pk_st_name
 PRIMARY KEY(name);
 ```
 ---
+# ALTER TABLE
+```sql
+sql> ALTER TABLE students
+DROP PRIMARY KEY;
+```
+---
 # DROP INDEX
 ```sql
 sql> DROP INDEX `PRIMARY` ON students;
 ```
 ---
 # ALTER TABLE
-```sql
-# CLUSTERED INDEX 
+```sql 
 sql> ALTER TABLE students
 ADD CONSTRAINT
 PRIMARY KEY(studentID);
@@ -151,6 +156,12 @@ sql> SHOW CREATE TABLE students;
 sql> ALTER TABLE students
 DROP FOREIGN KEY fk_st_classID;
 ```
+---
+# DROP INDEX
+```sql
+sql> DROP INDEX fk_st_classID ON students;
+```
+
 
 
 
