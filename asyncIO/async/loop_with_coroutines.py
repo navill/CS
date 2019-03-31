@@ -115,9 +115,9 @@ class Task:
 
 	def step(self, future):
 		try:
-			next_future=self.coro.send(future.result)
+			next_future=self.coro.send(None)
 		except StopIteration as exc:
-			print(f'the last result : {exc}')
+			print(f'task has been {exc.value}')
 			raise StopError
 
 		next_future.add_done_callback(self.step)

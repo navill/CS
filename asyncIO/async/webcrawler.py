@@ -18,8 +18,6 @@ class Crawler:
 		for w in workers:
 			w.cancel()
 
-		await asyncio.gather(*workers, return_exceptions=True)
-
 	async def worker(self):
 		while True:
 			url=await self.q.get()
