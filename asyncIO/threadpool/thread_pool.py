@@ -28,7 +28,7 @@ class FetchThread(threading.Thread):
         context=ssl.create_default_context()
         ssock=context.wrap_socket(socket.socket(socket.AF_INET), server_hostname='xkcd.com')
         ssock.connect(('xkcd.com', 443))
-        request='GET {} HTTP/1.0\r\nHost: xkcd.com\r\n\r\n'.format(url)
+        request='GET {} HTTP/1.1\r\nHost: xkcd.com\r\nConnection: close\r\n\r\n'.format(url)
         ssock.sendall(request.encode())
         response=b''
         chunk=ssock.recv(4096)
