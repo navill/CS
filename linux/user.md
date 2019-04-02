@@ -17,7 +17,7 @@ $ sudo cat /etc/shadow
 $ cat /etc/group
 ```
 ---
-# group passwd
+# group passwd info
 ```
 $ sudo cat /etc/gshadow
 ```
@@ -25,7 +25,7 @@ $ sudo cat /etc/gshadow
 # useradd
 ```
 # add user and create home directory
-$ sudo useradd -m john
+$ sudo useradd -s /bin/sh -m -d /home/john john
 ```
 ---
 # passwd
@@ -37,17 +37,6 @@ $ sudo passwd john
 ```
 # print default setting
 $ useradd -D
-```
----
-# useradd
-
-```
-$ useradd -s /bin/sh -m -d /home/john john
-```
----
-# usermod
-```
-$ sudo usermod -d /home/john john
 ```
 ---
 # userdel
@@ -113,11 +102,6 @@ $ sudo gpasswd -r wps10
 ## when UID and EUID are different
   1. setuid in an executable file
   2. su command
----
-# who
-```
-$ who -H
-```
 ---
 # id
 ```
