@@ -123,7 +123,15 @@ $ groups john
 ```
 # change owner
 $ sudo chown john test
+# change owner recursively
 $ sudo chown james -R test
 ```
-
+---
+# chown
+```
+# change group
+$ sudo chown :john test 
+# change owner:group
+$ sudo chown john:john -R test
+```
 
