@@ -40,7 +40,7 @@ $ useradd -D
 ```
 ---
 # useradd
----
+
 ```
 $ useradd -s /bin/sh -m -d /home/john john
 ```
