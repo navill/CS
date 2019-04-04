@@ -4,32 +4,32 @@
 ---
 # INNER JOIN 
 ```sql
-sql> SELECT S.name, S.classID, T.name
+sql> SELECT S.studentName, S.classID, T.teacherName
 FROM students S JOIN teachers T
 ON S.classID = T.classID;
 ```
 ---
 # LEFT OUTER JOIN
 ```sql
-sql> SELECT S.name, S.classID, T.name 
+sql> SELECT S.studentName, S.classID, T.teacherName 
 FROM students S LEFT OUTER JOIN teachers T 
 ON S.classID = T.classID;
 ```
 ---
 # RIGHT OUTER JOIN
 ```sql
-sql> SELECT S.name, S.classID, T.name 
+sql> SELECT S.studentName, S.classID, T.teacherName 
 FROM students S RIGHT OUTER JOIN teachers T 
 ON S.classID = T.classID; 
 ```
 ---
 # FULL OUTER JOIN
 ```sql
-sql> SELECT S.name, S.classID, T.name 
+sql> SELECT S.studentName, S.classID, T.teacherName 
 FROM students S LEFT OUTER JOIN teachers T 
 ON S.classID = T.classID
 UNION
-SELECT S.name, S.classID, T.name 
+SELECT S.studentName, S.classID, T.teacherName 
 FROM students S RIGHT OUTER JOIN teachers T 
 ON S.classID = T.classID;
 ```
@@ -65,22 +65,22 @@ GROUP BY classID;
 # M:N
 ```sql
 sql> CREATE TABLE subjects (
-sub_name VARCHAR(20) NOT NULL UNIQUE,
-room_num TINYINT NOT NULL); 
+subjectName VARCHAR(20) NOT NULL UNIQUE,
+roomNum TINYINT NOT NULL); 
 ```
 ---
 # M:N
 ``` sql
 sql> CREATE TABLE student_subject (
 regID SMALLINT AUTO_INCREMENT PRIMARY KEY,
-student_name VARCHAR(20) NOT NULL,
-subject_name VARCHAR(20) NOT NULL);
+studentName VARCHAR(20) NOT NULL,
+subjectName VARCHAR(20) NOT NULL);
 ```
 ---
 # M:N
 ```sql
 sql> INSERT INTO subjects 
-(sub_name, room_num) 
+(subjectName, roomNum) 
 VALUES ('math', 101), ('literature', 105), 
 ('science', 107), ('english', 110), ('ethics', 111);
 ```
@@ -88,7 +88,7 @@ VALUES ('math', 101), ('literature', 105),
 # M:N
 ```sql
 sql> INSERT INTO student_subject 
-(student_name, subject_name)
+(studentName, subjectName)
 VALUES ('Greg', 'english'), 
 ('Greg', 'ethics'), ('John', 'english'),
 ('John', 'literature'), ('Mark', 'english'), 

@@ -33,7 +33,7 @@ sql> SELECT USER, HOST FROM USER;
 ---
 # create user
 ```
-sql> CREATE USER 'greg'@'%' IDENTIFIED BY '1234';
+sql> CREATE USER 'greg'@'localhost' IDENTIFIED BY '1234';
 ```
 ---
 # grant all priv
@@ -47,11 +47,6 @@ sql> FLUSH PRIVILEGES;
 ```
 sql> SELECT USER, HOST, SUPER_PRIV FROM USER
 WHERE USER LIKE 'greg';
-```
----
-# set password
-```
-sql> SET PASSWORD FOR 'greg'@'%'=PASSWORD('abcd');
 ```
 ---
 # switch user
@@ -77,11 +72,6 @@ sql> show databases;
 sql> SELECT USER();
 ```
 ---
-# drop user
-```
-sql> DROP USER 'greg'@'%';
-```
----
 # create database
 ```
 sql> CREATE DATABASE mydb DEFAULT CHARACTER SET utf8mb4;
@@ -90,19 +80,4 @@ sql> CREATE DATABASE mydb DEFAULT CHARACTER SET utf8mb4;
 # drop database
 ```
 sql> DROP DATABASE mydb;
-```
----
-# test db
-```
-$ git clone https://github.com/datacharmer/test_db.git
-$ mysql -u root -p < employees.sql
-```
----
-# employees
-```
-$ mysql -u root -p
-sql> show databases;
-sql> use employees;
-sql> show tables;
-sql> SELECT * FROM EMPLOYEES;
 ```

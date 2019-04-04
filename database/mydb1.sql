@@ -56,15 +56,15 @@ DROP TABLE IF EXISTS `students`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `students` (
   `studentID` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) NOT NULL,
-  `height` smallint(6) NOT NULL,
+  `studentName` varchar(20) NOT NULL,
+  `height` smallint(6) DEFAULT 200,
   `score` smallint(6) DEFAULT NULL,
   `birthday` date NOT NULL,
-  `classID` int(11) NOT NULL,
+  `classID` int(11) DEFAULT NULL,
   PRIMARY KEY (`studentID`),
   KEY `classID` (`classID`),
   CONSTRAINT `students_ibfk_1` FOREIGN KEY (`classID`) REFERENCES `classes` (`classID`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,7 +73,7 @@ CREATE TABLE `students` (
 
 LOCK TABLES `students` WRITE;
 /*!40000 ALTER TABLE `students` DISABLE KEYS */;
-INSERT INTO `students` VALUES (2,'Greg',180,87,'2002-03-23',1),(12,'John',175,95,'2002-04-02',2),(13,'Mark',178,50,'2002-05-12',1),(14,'James',170,56,'2002-07-14',3),(15,'Johanna',165,90,'2001-09-23',1),(16,'Mary',160,50,'2002-01-05',2),(17,'Kelly',176,80,'2002-09-17',3),(18,'Sam',172,78,'2002-06-05',1),(19,'Daniel',187,90,'2002-12-01',2),(20,'Ann',165,46,'2002-09-18',3);
+INSERT INTO `students` VALUES (1,'Greg',180,87,'2002-03-23',1),(2,'John',175,95,'2002-04-02',2),(3,'Mark',178,50,'2002-05-12',1),(4,'James',170,56,'2002-07-14',3),(5,'Johanna',165,90,'2001-09-23',1),(6,'Mary',160,50,'2002-01-05',2),(7,'Kelly',176,80,'2002-09-17',3),(8,'Sam',172,78,'2002-06-05',1),(9,'Daniel',187,90,'2002-12-01',2),(10,'Ann',165,46,'2002-09-18',3);
 /*!40000 ALTER TABLE `students` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -86,13 +86,13 @@ DROP TABLE IF EXISTS `teachers`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `teachers` (
   `teacherID` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) NOT NULL,
+  `teacherName` varchar(20) NOT NULL,
   `subject` varchar(30) DEFAULT NULL,
-  `classID` int(11) NOT NULL,
+  `classID` int(11) DEFAULT NULL,
   PRIMARY KEY (`teacherID`),
   UNIQUE KEY `subject` (`subject`),
-  KEY `classID` (`classID`),
-  CONSTRAINT `teachers_ibfk_1` FOREIGN KEY (`classID`) REFERENCES `classes` (`classID`)
+  KEY `fk_classID` (`classID`),
+  CONSTRAINT `fk_classID` FOREIGN KEY (`classID`) REFERENCES `classes` (`classID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -115,4 +115,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-26  2:23:17
+-- Dump completed on 2019-04-04 13:31:14

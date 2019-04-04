@@ -17,11 +17,11 @@ num_students INT NOT NULL
 ```sql
 sql> CREATE TABLE students (
 studentID INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-name VARCHAR(20) NOT NULL,
-height SMALLINT NOT NULL,
-score SMALLINT,
+studentName VARCHAR(20) NOT NULL,
+height SMALLINT DEFAULT 200,
+score SMALLINT NULL,
 birthday DATE NOT NULL,
-classID INT NOT NULL,
+classID INT NULL,
 FOREIGN KEY (classID) REFERENCES classes (classID)
 );
 ```
@@ -29,10 +29,12 @@ FOREIGN KEY (classID) REFERENCES classes (classID)
 # create table teachers
 ```sql
 sql>CREATE TABLE teachers (
-teacherID INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+teacherID INT AUTO_INCREMENT NOT NULL,
 subject VARCHAR(30) UNIQUE,
-classID INT NOT NULL,
-FOREIGN KEY (classID) REFERENCES classes (classID)
+classID INT NULL,
+PRIMARY KEY(teacherID),
+CONSTRAINT fk_classID
+FOREIGN KEY (clastsID) REFERENCES classes (classID)
 );
 ```
 ---
@@ -56,14 +58,14 @@ VALUES
 # insert into students
 ```sql
 sql> INSERT INTO students
-(name, height, score, birthday, classID)
+(studentName, height, score, birthday, classID)
 VALUES ('Greg', 180, 87, '2002-3-23', 1);
 ```
 ---
 # insert into students
 ```sql
 sql> INSERT INTO students
-(name, height, score, birthday, classID)
+(studentName, height, score, birthday, classID)
 VALUES
 ('John', 175, 95, '2002-4-2', 2),
 ('Mark', 178, 50, '2002-5-12', 1),
@@ -79,14 +81,15 @@ VALUES
 ---
 # alter table teachers
 ```sql
-sql> ALTER TABLE teachers ADD COLUMN
-name VARCHAR(20) NOT NULL AFTER teacherID;
+sql> ALTER TABLE teachers 
+ADD COLUMN
+teacherName VARCHAR(20) NOT NULL AFTER teacherID;
 ```
 ---
 # insert into teachers
 ```sql
 sql> INSERT INTO teachers
-(name, subject, classID)
+(teacherName, subject, classID)
 VALUES
 ('yang', 'math', 1),
 ('park', 'literature', 2),
@@ -96,11 +99,11 @@ VALUES
 # mysqldump
 ```
 $ mysqldump -u root -p --databases 
-mydb > mydb_backup.sql
+mydb > mydb1.sql
 ```
 ---
 # mysqldump
 ```sql
 $ mysql -u root -p
-mysql> source mydb_backup.sql 
+mysql> source mydb1.sql 
 ```

@@ -36,7 +36,7 @@ MODIFY COLUMN score SMALLINT DEFAULT 0;
 # INSERT INTO
 ```sql
 sql> INSERT INTO students
-(name, height, score, birthday)
+(studentName, height, score, birthday)
 VALUES ('Kreizig', 175, 75, '2002-9-19'),
 ('Elizabeth', 165, 80, '2003-1-17');
 ```
@@ -44,14 +44,14 @@ VALUES ('Kreizig', 175, 75, '2002-9-19'),
 # INSERT INTO
 ```sql
 sql> INSERT INTO students 
-(name, height, score, birthday, classID)
+(studentName, height, score, birthday, classID)
 VALUES ('Emily', 180, 60, '2002-9-18', NULL),
 ('Lily', 155, 100, '2002-9-18', NULL);
 ```
 ---
 # INSERT INTO
 ```sql
-sql> INSERT INTO teachers (name, subject)
+sql> INSERT INTO teachers (teacherName, subject)
 VALUES ('kim', 'english'),
 ('choi', 'ethics');
 ```
@@ -63,7 +63,25 @@ sql> CREATE TABLE student_cp (SELECT * FROM students);
 ---
 # DELETE FROM
 ```sql
-sql> DELETE FROM student_cp WHERE name like '%eiz%';
+sql> DELETE FROM student_cp 
+WHERE studentName like '%eiz%';
+```
+---
+# UPDATE SET
+```sql
+sql> UPDATE student_cp SET score=99 
+WHERE studentName like 'Mary';
+```
+---
+# DELETE FROM
+```sql
+sql> DELETE FROM student_cp;
+```
+---
+# INSERT INTO
+```sql
+sql> INSERT INTO student_cp
+(SELECT * FROM 	students);
 ```
 ---
 # TRUNCATE TABLE
@@ -82,11 +100,6 @@ BETWEEN '2002-5-1' AND '2002-9-10');
 ```sql
 sql> DROP TABLE student_cp;
 ```
----
-# UPDATE SET
-```sql
-sql> UPDATE students SET score=99 
-WHERE name like 'Mary';
-```
+
 
 
