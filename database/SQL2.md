@@ -105,21 +105,22 @@ VALUES ('Greg', 'english'),
 ---
 # M:N
 ```sql
-sql> SELECT ST.name, ST.score, SB.sub_name, SB.room_num
+sql> SELECT ST.studentName, ST.score, 
+SB.subjectName, SB.roomNum
 FROM students ST INNER JOIN student_subject SS
-ON ST.name=SS.student_name
+ON ST.studentName=SS.studentName
 INNER JOIN subjects SB
-ON SS.subject_name=SB.sub_name
-ORDER BY ST.name;
+ON SS.subjectName=SB.subjectName
+ORDER BY ST.studentName;
 ```
 ---
 # M:N
 ```sql
-sql> SELECT SB.sub_name, SB.room_num, 
-ST.name, ST.score 
+sql> SELECT SB.subjectName, SB.roomNum, 
+ST.studentName, ST.score 
 FROM students ST INNER JOIN student_subject SS 
-ON ST.name=SS.student_name 
+ON ST.studentName=SS.studentName 
 INNER JOIN subjects SB 
-ON SS.subject_name=SB.sub_name 
-ORDER BY SB.sub_name;
+ON SS.subjectName=SB.subjectName 
+ORDER BY SB.subjectName;
 ```
