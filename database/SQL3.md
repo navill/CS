@@ -9,13 +9,13 @@
 ```sql
 sql> CREATE VIEW view_st_sb_join 
 AS 
-SELECT ST.name, ST.score, SS.subject_name,
-SB.sub_name, SB.room_num  
+SELECT ST.studentName, ST.score,
+SB.subjectName, SB.roomNum  
 FROM students ST INNER JOIN student_subject SS 
-ON ST.name=SS.student_name 
+ON ST.studentName=SS.studentName 
 INNER JOIN subjects SB 
-ON SS.subject_name=SB.sub_name 
-ORDER BY ST.name;
+ON SS.subjectName=SB.subjectName 
+ORDER BY ST.studentName;
 ```
 ---
 # VIEW
@@ -30,7 +30,7 @@ WHERE score BETWEEN 50 AND 70;
 ```sql
 sql> UPDATE view_st_sb_join 
 SET score=70 
-WHERE name like 'Kelly';
+WHERE studentName like 'Kelly';
 ```
 ---
 # DROP VIEW
@@ -105,14 +105,17 @@ sql> SHOW INDEX FROM students;
 # ALTER TABLE
 ```sql
 sql> ALTER TABLE students
-ADD CONSTRAINT pk_st_name 
-PRIMARY KEY(name);
+MODIFY COLUMN studentID INT NOT NULL;
+
+sql> ALTER TABLE students
+DROP PRIMARY KEY;
 ```
 ---
 # ALTER TABLE
 ```sql
 sql> ALTER TABLE students
-DROP PRIMARY KEY;
+ADD CONSTRAINT pk_st_studentName 
+PRIMARY KEY(studentName);
 ```
 ---
 # DROP INDEX
@@ -129,13 +132,13 @@ PRIMARY KEY(studentID);
 ---
 # CREATE INDEX
 ```sql
-sql> CREATE INDEX idx_st_name
-ON students (name);
+sql> CREATE INDEX idx_st_studentName
+ON students (studentName);
 ```
 ---
 # DROP INDEX
 ```sql
-sql> DROP INDEX idx_st_name;
+sql> DROP INDEX idx_st_studentName
 ON students;
 ```
 ---
@@ -146,21 +149,30 @@ ADD CONSTRAINT fk_st_classID
 FOREIGN KEY(classID) REFERENCES classes(classID); 
 ```
 ---
+# ALTER TABLE
+```sql
+sql> ALTER TABLE students
+DROP FOREIGN KEY students_ibfk_1;
+```
+---
 # SHOW CREATE TABLE
 ```sql
 sql> SHOW CREATE TABLE students;
 ```
 ---
+# DROP INDEX 
+```sql
+sql> DROP INDEX classID
+ON students;
+```
+---
 # ALTER TABLE
 ```sql
 sql> ALTER TABLE students
-DROP FOREIGN KEY fk_st_classID;
+ADD CONSTRAINT fk_st_classID
+FOREIGN KEY(classID) REFERENCES classes(classID);
 ```
----
-# DROP INDEX
-```sql
-sql> DROP INDEX fk_st_classID ON students;
-```
+
 
 
 
