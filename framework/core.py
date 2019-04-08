@@ -1,6 +1,4 @@
 from urls import urlpatterns
-from views import (post_list, post_detail,
-                    post_create, post_update, post_delete)
 import re
 
 def not_found(environ, start_response):
