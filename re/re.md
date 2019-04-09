@@ -84,3 +84,18 @@ r'([a-zA-Z0-9_]+)@([a-zA-Z0-9]+)\.([a-zA-Z0-9]+)'
 "my email address is abcde@gmail.com"
 >>>re.search(pattern, string)
 ```
+---
+# compile
+```
+>>> pat=re.compile(
+r'(\d{3})([.-]|\s)?(\d{3,4})([.-]|\s)?(\d{4})'
+)
+>>> string=' 전화번호1 : 010-1111-1111'\
+' 전화번호2 : 01011112222'\
+' 전화번호3 : 010 333 4444'\
+' 전화번호3 : 010.444.5555'
+ 
+>>> pat.search(string)
+
+>>> pat.findall(string)
+```
